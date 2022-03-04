@@ -100,8 +100,7 @@ namespace FurnitureAssemblyListImplement.Implements
             }
             throw new Exception("Элемент не найден");
         }
-        private static Furniture CreateModel(FurnitureBindingModel model, Furniture
-        furniture)
+        private static Furniture CreateModel(FurnitureBindingModel model, Furniture furniture)
         {
             furniture.FurnitureName = model.FurnitureName;
             furniture.Price = model.Price;
@@ -118,13 +117,11 @@ namespace FurnitureAssemblyListImplement.Implements
             {
                 if (furniture.FurnitureComponents.ContainsKey(component.Key))
                 {
-                    furniture.FurnitureComponents[component.Key] =
-                    model.FurnitureComponents[component.Key].Item2;
+                    furniture.FurnitureComponents[component.Key] = model.FurnitureComponents[component.Key].Item2;
                 }
                 else
                 {
-                    furniture.FurnitureComponents.Add(component.Key,
-                    model.FurnitureComponents[component.Key].Item2);
+                    furniture.FurnitureComponents.Add(component.Key, model.FurnitureComponents[component.Key].Item2);
                 }
             }
             return furniture;
