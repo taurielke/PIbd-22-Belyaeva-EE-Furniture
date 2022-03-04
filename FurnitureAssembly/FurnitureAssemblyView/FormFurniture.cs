@@ -30,11 +30,7 @@ namespace FurnitureAssemblyView
             {
                 try
                 {
-                    FurnitureViewModel view = _logic.Read(new FurnitureBindingModel
-                    {
-                        Id =
-                   id.Value
-                    })?[0];
+                    FurnitureViewModel view = _logic.Read(new FurnitureBindingModel{Id =id.Value})?[0];
                     if (view != null)
                     {
                         textBoxName.Text = view.FurnitureName;
@@ -45,8 +41,7 @@ namespace FurnitureAssemblyView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
