@@ -56,17 +56,6 @@ namespace FurnitureAssemblyView
             form.ShowDialog();
         }
 
-        private void toolStripMenuItemWarehouses_Click(object sender, EventArgs e)
-        {
-            var form = Program.Container.Resolve<FormWarehouses>();
-            form.ShowDialog();
-        }
-
-        private void toolStripMenuItemFillWarehouse_Click(object sender, EventArgs e)
-        {
-            var form = Program.Container.Resolve<FormFillWarehouse>();
-            form.ShowDialog();
-        }
 
         private void buttonCreateOrder_Click(object sender, EventArgs e)
         {
@@ -138,6 +127,5 @@ namespace FurnitureAssemblyView
         {
             LoadData();
         }
-
     }
 }
