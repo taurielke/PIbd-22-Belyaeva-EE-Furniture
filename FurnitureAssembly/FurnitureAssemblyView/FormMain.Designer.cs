@@ -68,11 +68,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonTakeOrderInWork
             // 
-<<<<<<< Updated upstream
-            this.buttonTakeOrderInWork.Location = new System.Drawing.Point(980, 161);
-=======
             this.buttonTakeOrderInWork.Location = new System.Drawing.Point(980, 136);
->>>>>>> Stashed changes
             this.buttonTakeOrderInWork.Name = "buttonTakeOrderInWork";
             this.buttonTakeOrderInWork.Size = new System.Drawing.Size(257, 44);
             this.buttonTakeOrderInWork.TabIndex = 3;
@@ -82,11 +78,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonOrderReady
             // 
-<<<<<<< Updated upstream
-            this.buttonOrderReady.Location = new System.Drawing.Point(980, 269);
-=======
             this.buttonOrderReady.Location = new System.Drawing.Point(980, 216);
->>>>>>> Stashed changes
             this.buttonOrderReady.Name = "buttonOrderReady";
             this.buttonOrderReady.Size = new System.Drawing.Size(257, 44);
             this.buttonOrderReady.TabIndex = 4;
@@ -96,11 +88,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonIssuedOrder
             // 
-<<<<<<< Updated upstream
-            this.buttonIssuedOrder.Location = new System.Drawing.Point(980, 372);
-=======
             this.buttonIssuedOrder.Location = new System.Drawing.Point(980, 301);
->>>>>>> Stashed changes
             this.buttonIssuedOrder.Name = "buttonIssuedOrder";
             this.buttonIssuedOrder.Size = new System.Drawing.Size(257, 44);
             this.buttonIssuedOrder.TabIndex = 5;
@@ -110,11 +98,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonRefresh
             // 
-<<<<<<< Updated upstream
-            this.buttonRefresh.Location = new System.Drawing.Point(980, 476);
-=======
             this.buttonRefresh.Location = new System.Drawing.Point(980, 385);
->>>>>>> Stashed changes
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(257, 44);
             this.buttonRefresh.TabIndex = 6;
@@ -176,11 +160,7 @@ namespace FurnitureAssemblyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< Updated upstream
-            this.ClientSize = new System.Drawing.Size(1284, 542);
-=======
             this.ClientSize = new System.Drawing.Size(1284, 557);
->>>>>>> Stashed changes
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssuedOrder);
             this.Controls.Add(this.buttonOrderReady);

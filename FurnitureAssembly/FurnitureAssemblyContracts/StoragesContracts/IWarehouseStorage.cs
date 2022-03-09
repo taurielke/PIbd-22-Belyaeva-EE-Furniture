@@ -14,5 +14,6 @@ namespace FurnitureAssemblyContracts.StoragesContracts
         void Insert(WarehouseBindingModel model);
         void Update(WarehouseBindingModel model);
         void Delete(WarehouseBindingModel model);
+        bool CheckComponentsAmount(int amount, Dictionary<int, (string, int)> components);
     }
 }

@@ -147,5 +147,10 @@ namespace FurnitureAssemblyListImplement.Implements
                 WarehouseComponents = warehouseComonents
             };
         }
+
+        public bool CheckComponentsAmount(int amount, Dictionary<int, (string, int)> components)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
