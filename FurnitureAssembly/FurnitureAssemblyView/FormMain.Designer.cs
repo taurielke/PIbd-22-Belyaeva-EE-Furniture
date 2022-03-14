@@ -76,12 +76,12 @@ namespace FurnitureAssemblyView
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 62;
             this.dataGridView.RowTemplate.Height = 33;
-            this.dataGridView.Size = new System.Drawing.Size(934, 510);
+            this.dataGridView.Size = new System.Drawing.Size(963, 510);
             this.dataGridView.TabIndex = 1;
             // 
             // buttonCreateOrder
             // 
-            this.buttonCreateOrder.Location = new System.Drawing.Point(980, 59);
+            this.buttonCreateOrder.Location = new System.Drawing.Point(1023, 68);
             this.buttonCreateOrder.Name = "buttonCreateOrder";
             this.buttonCreateOrder.Size = new System.Drawing.Size(257, 44);
             this.buttonCreateOrder.TabIndex = 2;
@@ -91,7 +91,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonTakeOrderInWork
             // 
-            this.buttonTakeOrderInWork.Location = new System.Drawing.Point(980, 161);
+            this.buttonTakeOrderInWork.Location = new System.Drawing.Point(1023, 170);
             this.buttonTakeOrderInWork.Name = "buttonTakeOrderInWork";
             this.buttonTakeOrderInWork.Size = new System.Drawing.Size(257, 44);
             this.buttonTakeOrderInWork.TabIndex = 3;
@@ -101,7 +101,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonOrderReady
             // 
-            this.buttonOrderReady.Location = new System.Drawing.Point(980, 269);
+            this.buttonOrderReady.Location = new System.Drawing.Point(1023, 278);
             this.buttonOrderReady.Name = "buttonOrderReady";
             this.buttonOrderReady.Size = new System.Drawing.Size(257, 44);
             this.buttonOrderReady.TabIndex = 4;
@@ -111,7 +111,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonIssuedOrder
             // 
-            this.buttonIssuedOrder.Location = new System.Drawing.Point(980, 372);
+            this.buttonIssuedOrder.Location = new System.Drawing.Point(1023, 381);
             this.buttonIssuedOrder.Name = "buttonIssuedOrder";
             this.buttonIssuedOrder.Size = new System.Drawing.Size(257, 44);
             this.buttonIssuedOrder.TabIndex = 5;
@@ -121,7 +121,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(980, 476);
+            this.buttonRefresh.Location = new System.Drawing.Point(1023, 485);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(257, 44);
             this.buttonRefresh.TabIndex = 6;
@@ -136,7 +136,7 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1284, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1324, 33);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -292,7 +292,7 @@ namespace FurnitureAssemblyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 542);
+            this.ClientSize = new System.Drawing.Size(1324, 542);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssuedOrder);
             this.Controls.Add(this.buttonOrderReady);

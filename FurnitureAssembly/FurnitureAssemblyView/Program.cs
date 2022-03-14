@@ -8,7 +8,8 @@ using FurnitureAssemblyContracts.BindingModels;
 using FurnitureAssemblyContracts.BusinessLogicsContracts;
 using FurnitureAssemblyBusinessLogic.BusinessLogics;
 using FurnitureAssemblyContracts.StoragesContracts;
-using FurnitureAssemblyListImplement.Implements;
+using FurnitureAssemblyFileImplement.Implements;
+using FurnitureAssemblyFileImplement;
 using Unity.Lifetime;
 
 namespace FurnitureAssemblyView
@@ -37,6 +38,7 @@ namespace FurnitureAssemblyView
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(Container.Resolve<FormMain>());
+            FileDataListSingleton.Save();
         }
         private static IUnityContainer BuildUnityContainer()
         {
