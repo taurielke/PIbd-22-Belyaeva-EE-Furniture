@@ -12,14 +12,10 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage _orderStorage;
-        private readonly IWarehouseStorage _warehouseStorage;
-        private readonly IFurnitureStorage _furnitureStorage;
 
-        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IFurnitureStorage furnitureStorage)
+        public OrderLogic(IOrderStorage orderStorage)
         {
             _orderStorage = orderStorage;
-            _warehouseStorage = warehouseStorage;
-            _furnitureStorage = furnitureStorage;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -51,7 +47,8 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
         {
             var order = _orderStorage.GetElement(new OrderBindingModel
             {
-                Id = model.OrderId
+                Id =
+           model.OrderId
             });
             if (order == null)
             {
@@ -60,11 +57,6 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
             if (order.Status != Enum.GetName(typeof(OrderStatus), 0))
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
-            }
-            var furniture = _furnitureStorage.GetElement(new FurnitureBindingModel { Id = order.FurnitureId });
-            if (!_warehouseStorage.CheckComponentsAmount(order.Count, furniture.FurnitureComponents))
-            {
-                throw new Exception("Недостаточно компонентов на складе - невозможно принять заказ в работу, пополните склад");
             }
             _orderStorage.Update(new OrderBindingModel
             {
