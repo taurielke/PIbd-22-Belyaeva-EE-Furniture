@@ -7,6 +7,8 @@ using Unity;
 using FurnitureAssemblyContracts.BindingModels;
 using FurnitureAssemblyContracts.BusinessLogicsContracts;
 using FurnitureAssemblyBusinessLogic.BusinessLogics;
+using FurnitureAssemblyBusinessLogic.OfficePackage;
+using FurnitureAssemblyBusinessLogic.OfficePackage.Implements;
 using FurnitureAssemblyContracts.StoragesContracts;
 using FurnitureAssemblyDatabaseImplement.Implements;
 using Unity.Lifetime;
@@ -47,6 +49,10 @@ namespace FurnitureAssemblyView
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IFurnitureLogic, FurnitureLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportLogic, ReportLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToWord, SaveToWord>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
 
