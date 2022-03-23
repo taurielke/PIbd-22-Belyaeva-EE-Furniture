@@ -24,9 +24,7 @@ namespace FurnitureAssemblyFileImplement.Implements
             return source.Orders
                 .Select(CreateModel)
                 .ToList();
-
         }
-
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
             if (model == null)
@@ -34,9 +32,9 @@ namespace FurnitureAssemblyFileImplement.Implements
                 return null;
             }
             return source.Orders
-                .Where(rec => rec.FurnitureId == model.FurnitureId)
-                .Select(CreateModel)
-                .ToList();
+                .Where(rec => rec.Id.Equals(model.Id) || rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                .ToList()
+                .Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)

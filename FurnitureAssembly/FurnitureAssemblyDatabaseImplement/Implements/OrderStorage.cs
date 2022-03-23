@@ -16,7 +16,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
         public List<OrderViewModel> GetFullList()
         {
             using var context = new FurnitureAssemblyDatabase();
-            return context.Orders.Select(CreateModel).ToList();
+            return context.Orders.Include(rec => rec.Furniture).ToList().Select(CreateModel).ToList();
         }
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
@@ -25,7 +25,10 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
                 return null;
             }
             using var context = new FurnitureAssemblyDatabase();
-            return context.Orders.Where(rec => rec.Id.Equals(model.Id)).Select(CreateModel).ToList();
+            return context.Orders.Include(rec=>rec.Furniture)
+                .Where(rec => rec.Id.Equals(model.Id) || rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                .ToList()
+                .Select(CreateModel).ToList();
 
         }
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -35,25 +38,45 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
                 return null;
             }
             using var context = new FurnitureAssemblyDatabase();
-            var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            var order = context.Orders.Include(rec => rec.Furniture).FirstOrDefault(rec => rec.Id == model.Id);
             return order != null ? CreateModel(order) : null;
         }
         public void Insert(OrderBindingModel model)
         {
             using var context = new FurnitureAssemblyDatabase();
-            context.Orders.Add(CreateModel(model, new Order()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Orders.Add(CreateModel(model, new Order()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Update(OrderBindingModel model)
         {
             using var context = new FurnitureAssemblyDatabase();
-            var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Delete(OrderBindingModel model)
         {
@@ -81,12 +104,11 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
         }
         private static OrderViewModel CreateModel(Order order)
         {
-            using var context = new FurnitureAssemblyDatabase();
             return new OrderViewModel
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
-                FurnitureName = context.Furnitures.FirstOrDefault(furnitureName => furnitureName.Id == order.FurnitureId)?.FurnitureName,
+                FurnitureName = order.Furniture.FurnitureName,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = Enum.GetName(typeof(OrderStatus), order.Status),
