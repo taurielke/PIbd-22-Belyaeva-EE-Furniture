@@ -15,12 +15,14 @@ namespace FurnitureAssemblyView
     {
         private readonly IFurnitureLogic _logicF;
         private readonly IOrderLogic _logicO;
+        private readonly IClientLogic _logicC;
 
-        public FormCreateOrder(IFurnitureLogic logicF, IOrderLogic logicO)
+        public FormCreateOrder(IFurnitureLogic logicF, IOrderLogic logicO, IClientLogic logicC)
         {
             InitializeComponent();
             _logicF = logicF;
             _logicO = logicO;
+            _logicC = logicC;
         }
 
         private void FormCreateOrder_Load(object sender, EventArgs e)
@@ -34,6 +36,14 @@ namespace FurnitureAssemblyView
                     comboBoxFurniture.ValueMember = "Id";
                     comboBoxFurniture.DataSource = list;
                     comboBoxFurniture.SelectedItem = null;
+                }
+                List<ClientViewModel> listC = _logicC.Read(null);
+                if (listC != null)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listC;
+                    comboBoxClient.SelectedItem = null;
                 }
             }
             catch (Exception ex)
@@ -85,10 +95,16 @@ namespace FurnitureAssemblyView
                 MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     FurnitureId = Convert.ToInt32(comboBoxFurniture.SelectedValue),
                     Count = Convert.ToInt32(textBoxAmount.Text),
                     Sum = Convert.ToDecimal(textBoxResPrice.Text)

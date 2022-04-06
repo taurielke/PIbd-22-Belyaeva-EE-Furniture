@@ -38,6 +38,7 @@ namespace FurnitureAssemblyView
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
+                    dataGridView.Columns[3].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -55,6 +56,12 @@ namespace FurnitureAssemblyView
         private void toolStripMenuItemFurniture_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormFurnitures>();
+            form.ShowDialog();
+        }
+
+        private void toolStripMenuItemClients_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormClients>();
             form.ShowDialog();
         }
 
