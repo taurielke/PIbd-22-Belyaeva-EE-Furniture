@@ -8,6 +8,9 @@ namespace FurnitureAssemblyContracts.ViewModels
     public class OrderViewModel
     {
         public int Id { get; set; }
+        public int ClientId { get; set; }
+        [DisplayName("Клиент")]
+        public string ClientFIO { get; set; }
         public int FurnitureId { get; set; }
         [DisplayName("Изделие")]
         public string FurnitureName { get; set; }
