@@ -10,8 +10,13 @@ namespace FurnitureAssemblyContracts.BusinessLogicsContracts
     {
         List<ReportFurnitureComponentViewModel> GetFurnitureComponent();
         List<ReportOrdersViewModel> GetOrders(ReportBindingModel model);
+        List<ReportWarehouseComponentViewModel> GetWarehouseComponent();
+        List<ReportOrdersGroupedByDateViewModel> GetOrdersGroupedByDate();
         void SaveFurnituresToWordFile(ReportBindingModel model);
+        void SaveWarehousesToWordFile(ReportBindingModel model);
         void SaveFurnitureComponentToExcelFile(ReportBindingModel model);
+        void SaveWarehouseComponentToExcelFile(ReportBindingModel model);
         void SaveOrdersToPdfFile(ReportBindingModel model);
+        void SaveOrdersGroupedByDateToPdfFile(ReportBindingModel model);
     }
 }

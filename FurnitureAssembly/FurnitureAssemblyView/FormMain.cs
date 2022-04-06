@@ -80,11 +80,46 @@ namespace FurnitureAssemblyView
             var form = Program.Container.Resolve<FormReportOrders>();
             form.ShowDialog();
         }
+
+        private void toolStripMenuItemWarehouseList_Click(object sender, EventArgs e)
+        {
+            using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+                {
+                    FileName = dialog.FileName
+                });
+                MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void toolStripMenuItemWarehouseComponents_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportWarehouseComponents>();
+            form.ShowDialog();
+        }
+        private void toolStripMenuItemOrdersGroupedByDate_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormReportOrdersGroupedByDate>();
+            form.ShowDialog();
+        }
         private void buttonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
+        }
+
+        private void toolStripMenuItemWarehouses_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormWarehouses>();
+            form.ShowDialog();
+        }
+
+        private void toolStripMenuItemFillWarehouses_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FormFillWarehouse>();
+            form.ShowDialog();
         }
 
         private void buttonTakeOrderInWork_Click(object sender, EventArgs e)
