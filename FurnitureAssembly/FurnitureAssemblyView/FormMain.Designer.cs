@@ -40,7 +40,15 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurniture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemWarehouses = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemFillWarehouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFurnitureList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFurnituresComponents = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOrderList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFillWarehouses = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseComponents = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOrdersGroupedByDate = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -53,12 +61,12 @@ namespace FurnitureAssemblyView
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 62;
             this.dataGridView.RowTemplate.Height = 33;
-            this.dataGridView.Size = new System.Drawing.Size(934, 510);
+            this.dataGridView.Size = new System.Drawing.Size(963, 510);
             this.dataGridView.TabIndex = 1;
             // 
             // buttonCreateOrder
             // 
-            this.buttonCreateOrder.Location = new System.Drawing.Point(980, 59);
+            this.buttonCreateOrder.Location = new System.Drawing.Point(1023, 68);
             this.buttonCreateOrder.Name = "buttonCreateOrder";
             this.buttonCreateOrder.Size = new System.Drawing.Size(257, 44);
             this.buttonCreateOrder.TabIndex = 2;
@@ -68,7 +76,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonTakeOrderInWork
             // 
-            this.buttonTakeOrderInWork.Location = new System.Drawing.Point(980, 136);
+            this.buttonTakeOrderInWork.Location = new System.Drawing.Point(1023, 170);
             this.buttonTakeOrderInWork.Name = "buttonTakeOrderInWork";
             this.buttonTakeOrderInWork.Size = new System.Drawing.Size(257, 44);
             this.buttonTakeOrderInWork.TabIndex = 3;
@@ -78,7 +86,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonOrderReady
             // 
-            this.buttonOrderReady.Location = new System.Drawing.Point(980, 216);
+            this.buttonOrderReady.Location = new System.Drawing.Point(1023, 278);
             this.buttonOrderReady.Name = "buttonOrderReady";
             this.buttonOrderReady.Size = new System.Drawing.Size(257, 44);
             this.buttonOrderReady.TabIndex = 4;
@@ -88,7 +96,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonIssuedOrder
             // 
-            this.buttonIssuedOrder.Location = new System.Drawing.Point(980, 301);
+            this.buttonIssuedOrder.Location = new System.Drawing.Point(1023, 381);
             this.buttonIssuedOrder.Name = "buttonIssuedOrder";
             this.buttonIssuedOrder.Size = new System.Drawing.Size(257, 44);
             this.buttonIssuedOrder.TabIndex = 5;
@@ -98,7 +106,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(980, 385);
+            this.buttonRefresh.Location = new System.Drawing.Point(1023, 485);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(257, 44);
             this.buttonRefresh.TabIndex = 6;
@@ -111,10 +119,12 @@ namespace FurnitureAssemblyView
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemHelp,
-            this.toolStripMenuItemFillWarehouse});
+            this.toolStripMenuItemFillWarehouses,
+            this.toolStripMenuItemReports,
+            this.toolStripMenuItemWarehouseReports});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1284, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1324, 33);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -131,36 +141,98 @@ namespace FurnitureAssemblyView
             // toolStripMenuItemComponents
             // 
             this.toolStripMenuItemComponents.Name = "toolStripMenuItemComponents";
-            this.toolStripMenuItemComponents.Size = new System.Drawing.Size(275, 34);
+            this.toolStripMenuItemComponents.Size = new System.Drawing.Size(218, 34);
             this.toolStripMenuItemComponents.Text = "Компоненты";
             this.toolStripMenuItemComponents.Click += new System.EventHandler(this.toolStripMenuItemComponents_Click);
             // 
             // toolStripMenuItemFurniture
             // 
             this.toolStripMenuItemFurniture.Name = "toolStripMenuItemFurniture";
-            this.toolStripMenuItemFurniture.Size = new System.Drawing.Size(275, 34);
+            this.toolStripMenuItemFurniture.Size = new System.Drawing.Size(218, 34);
             this.toolStripMenuItemFurniture.Text = "Изделия";
             this.toolStripMenuItemFurniture.Click += new System.EventHandler(this.toolStripMenuItemFurniture_Click);
             // 
             // toolStripMenuItemWarehouses
             // 
             this.toolStripMenuItemWarehouses.Name = "toolStripMenuItemWarehouses";
-            this.toolStripMenuItemWarehouses.Size = new System.Drawing.Size(275, 34);
+            this.toolStripMenuItemWarehouses.Size = new System.Drawing.Size(218, 34);
             this.toolStripMenuItemWarehouses.Text = "Склады";
             this.toolStripMenuItemWarehouses.Click += new System.EventHandler(this.toolStripMenuItemWarehouses_Click);
             // 
-            // toolStripMenuItemFillWarehouse
+            // toolStripMenuItemReports
             // 
-            this.toolStripMenuItemFillWarehouse.Name = "toolStripMenuItemFillWarehouse";
-            this.toolStripMenuItemFillWarehouse.Size = new System.Drawing.Size(168, 29);
-            this.toolStripMenuItemFillWarehouse.Text = "Пополнить склад";
-            this.toolStripMenuItemFillWarehouse.Click += new System.EventHandler(this.toolStripMenuItemFillWarehouse_Click);
+            this.toolStripMenuItemReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemFurnitureList,
+            this.toolStripMenuItemFurnituresComponents,
+            this.toolStripMenuItemOrderList});
+            this.toolStripMenuItemReports.Name = "toolStripMenuItemReports";
+            this.toolStripMenuItemReports.Size = new System.Drawing.Size(88, 29);
+            this.toolStripMenuItemReports.Text = "Отчеты";
+            // 
+            // toolStripMenuItemFurnitureList
+            // 
+            this.toolStripMenuItemFurnitureList.Name = "toolStripMenuItemFurnitureList";
+            this.toolStripMenuItemFurnitureList.Size = new System.Drawing.Size(328, 34);
+            this.toolStripMenuItemFurnitureList.Text = "Список изделий";
+            this.toolStripMenuItemFurnitureList.Click += new System.EventHandler(this.toolStripMenuItemFurnitureList_Click);
+            // 
+            // toolStripMenuItemFurnituresComponents
+            // 
+            this.toolStripMenuItemFurnituresComponents.Name = "toolStripMenuItemFurnituresComponents";
+            this.toolStripMenuItemFurnituresComponents.Size = new System.Drawing.Size(328, 34);
+            this.toolStripMenuItemFurnituresComponents.Text = "Изделия и их компоненты";
+            this.toolStripMenuItemFurnituresComponents.Click += new System.EventHandler(this.toolStripMenuItemFurnituresComponents_Click);
+            // 
+            // toolStripMenuItemOrderList
+            // 
+            this.toolStripMenuItemOrderList.Name = "toolStripMenuItemOrderList";
+            this.toolStripMenuItemOrderList.Size = new System.Drawing.Size(328, 34);
+            this.toolStripMenuItemOrderList.Text = "Список заказов";
+            this.toolStripMenuItemOrderList.Click += new System.EventHandler(this.toolStripMenuItemOrderList_Click);
+            // 
+            // toolStripMenuItemFillWarehouses
+            // 
+            this.toolStripMenuItemFillWarehouses.Name = "toolStripMenuItemFillWarehouses";
+            this.toolStripMenuItemFillWarehouses.Size = new System.Drawing.Size(181, 29);
+            this.toolStripMenuItemFillWarehouses.Text = "Пополнить склады";
+            this.toolStripMenuItemFillWarehouses.Click += new System.EventHandler(this.toolStripMenuItemFillWarehouses_Click);
+            // 
+            // toolStripMenuItemWarehouseReports
+            // 
+            this.toolStripMenuItemWarehouseReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemWarehouseList,
+            this.toolStripMenuItemWarehouseComponents,
+            this.toolStripMenuItemOrdersGroupedByDate});
+            this.toolStripMenuItemWarehouseReports.Name = "toolStripMenuItemWarehouseReports";
+            this.toolStripMenuItemWarehouseReports.Size = new System.Drawing.Size(186, 29);
+            this.toolStripMenuItemWarehouseReports.Text = "Отчеты по складам";
+            // 
+            // toolStripMenuItemWarehouseList
+            // 
+            this.toolStripMenuItemWarehouseList.Name = "toolStripMenuItemWarehouseList";
+            this.toolStripMenuItemWarehouseList.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemWarehouseList.Text = "Список складов";
+            this.toolStripMenuItemWarehouseList.Click += new System.EventHandler(this.toolStripMenuItemWarehouseList_Click);
+            // 
+            // toolStripMenuItemWarehouseComponents
+            // 
+            this.toolStripMenuItemWarehouseComponents.Name = "toolStripMenuItemWarehouseComponents";
+            this.toolStripMenuItemWarehouseComponents.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemWarehouseComponents.Text = "Загруженность складов";
+            this.toolStripMenuItemWarehouseComponents.Click += new System.EventHandler(this.toolStripMenuItemWarehouseComponents_Click);
+            // 
+            // toolStripMenuItemOrdersGroupedByDate
+            // 
+            this.toolStripMenuItemOrdersGroupedByDate.Name = "toolStripMenuItemOrdersGroupedByDate";
+            this.toolStripMenuItemOrdersGroupedByDate.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemOrdersGroupedByDate.Text = "Общий отчет по всем заказам";
+            this.toolStripMenuItemOrdersGroupedByDate.Click += new System.EventHandler(this.toolStripMenuItemOrdersGroupedByDate_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 557);
+            this.ClientSize = new System.Drawing.Size(1324, 542);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssuedOrder);
             this.Controls.Add(this.buttonOrderReady);
@@ -191,7 +263,15 @@ namespace FurnitureAssemblyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFurniture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemComponents;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemReports;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFurnitureList;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFurnituresComponents;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrderList;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouses;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFillWarehouse;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFillWarehouses;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseReports;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseList;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseComponents;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrdersGroupedByDate;
     }
 }

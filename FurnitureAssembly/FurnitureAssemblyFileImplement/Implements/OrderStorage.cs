@@ -21,16 +21,20 @@ namespace FurnitureAssemblyFileImplement.Implements
 
         public List<OrderViewModel> GetFullList()
         {
-            return source.Orders.Select(CreateModel).ToList();
+            return source.Orders
+                .Select(CreateModel)
+                .ToList();
         }
-
         public List<OrderViewModel> GetFilteredList(OrderBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            return source.Orders.Where(rec => rec.FurnitureId == model.FurnitureId).Select(CreateModel).ToList();
+            return source.Orders
+                .Where(rec => rec.Id.Equals(model.Id) || rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                .ToList()
+                .Select(CreateModel).ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -39,13 +43,16 @@ namespace FurnitureAssemblyFileImplement.Implements
             {
                 return null;
             }
-            var order = source.Orders.FirstOrDefault(rec => rec.Id == model.Id || rec.FurnitureId == model.FurnitureId);
+            var order = source.Orders
+                .FirstOrDefault(rec => rec.Id == model.Id || rec.FurnitureId
+            == model.FurnitureId);
             return order != null ? CreateModel(order) : null;
         }
 
         public void Insert(OrderBindingModel model)
         {
-            int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec => rec.Id): 0;
+            int maxId = source.Orders.Count > 0 ? source.Components.Max(rec => rec.Id)
+                : 0;
             var element = new Order
             {
                 Id = maxId + 1
