@@ -39,11 +39,16 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurniture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouses = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReports = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnitureList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnituresComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOrderList = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemClients = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFillWarehouses = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouseComponents = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOrdersGroupedByDate = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -114,7 +119,9 @@ namespace FurnitureAssemblyView
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemHelp,
-            this.toolStripMenuItemReports});
+            this.toolStripMenuItemFillWarehouses,
+            this.toolStripMenuItemReports,
+            this.toolStripMenuItemWarehouseReports});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1324, 33);
@@ -126,7 +133,7 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemComponents,
             this.toolStripMenuItemFurniture,
-            this.ToolStripMenuItemClients});
+            this.toolStripMenuItemWarehouses});
             this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
             this.toolStripMenuItemHelp.Size = new System.Drawing.Size(139, 29);
             this.toolStripMenuItemHelp.Text = "Справочники";
@@ -134,16 +141,23 @@ namespace FurnitureAssemblyView
             // toolStripMenuItemComponents
             // 
             this.toolStripMenuItemComponents.Name = "toolStripMenuItemComponents";
-            this.toolStripMenuItemComponents.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItemComponents.Size = new System.Drawing.Size(218, 34);
             this.toolStripMenuItemComponents.Text = "Компоненты";
             this.toolStripMenuItemComponents.Click += new System.EventHandler(this.toolStripMenuItemComponents_Click);
             // 
             // toolStripMenuItemFurniture
             // 
             this.toolStripMenuItemFurniture.Name = "toolStripMenuItemFurniture";
-            this.toolStripMenuItemFurniture.Size = new System.Drawing.Size(270, 34);
+            this.toolStripMenuItemFurniture.Size = new System.Drawing.Size(218, 34);
             this.toolStripMenuItemFurniture.Text = "Изделия";
             this.toolStripMenuItemFurniture.Click += new System.EventHandler(this.toolStripMenuItemFurniture_Click);
+            // 
+            // toolStripMenuItemWarehouses
+            // 
+            this.toolStripMenuItemWarehouses.Name = "toolStripMenuItemWarehouses";
+            this.toolStripMenuItemWarehouses.Size = new System.Drawing.Size(218, 34);
+            this.toolStripMenuItemWarehouses.Text = "Склады";
+            this.toolStripMenuItemWarehouses.Click += new System.EventHandler(this.toolStripMenuItemWarehouses_Click);
             // 
             // toolStripMenuItemReports
             // 
@@ -176,12 +190,43 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemOrderList.Text = "Список заказов";
             this.toolStripMenuItemOrderList.Click += new System.EventHandler(this.toolStripMenuItemOrderList_Click);
             // 
-            // ToolStripMenuItemClients
+            // toolStripMenuItemFillWarehouses
             // 
-            this.ToolStripMenuItemClients.Name = "ToolStripMenuItemClients";
-            this.ToolStripMenuItemClients.Size = new System.Drawing.Size(270, 34);
-            this.ToolStripMenuItemClients.Text = "Клиенты";
-            this.ToolStripMenuItemClients.Click += new System.EventHandler(this.toolStripMenuItemClients_Click);
+            this.toolStripMenuItemFillWarehouses.Name = "toolStripMenuItemFillWarehouses";
+            this.toolStripMenuItemFillWarehouses.Size = new System.Drawing.Size(181, 29);
+            this.toolStripMenuItemFillWarehouses.Text = "Пополнить склады";
+            this.toolStripMenuItemFillWarehouses.Click += new System.EventHandler(this.toolStripMenuItemFillWarehouses_Click);
+            // 
+            // toolStripMenuItemWarehouseReports
+            // 
+            this.toolStripMenuItemWarehouseReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemWarehouseList,
+            this.toolStripMenuItemWarehouseComponents,
+            this.toolStripMenuItemOrdersGroupedByDate});
+            this.toolStripMenuItemWarehouseReports.Name = "toolStripMenuItemWarehouseReports";
+            this.toolStripMenuItemWarehouseReports.Size = new System.Drawing.Size(186, 29);
+            this.toolStripMenuItemWarehouseReports.Text = "Отчеты по складам";
+            // 
+            // toolStripMenuItemWarehouseList
+            // 
+            this.toolStripMenuItemWarehouseList.Name = "toolStripMenuItemWarehouseList";
+            this.toolStripMenuItemWarehouseList.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemWarehouseList.Text = "Список складов";
+            this.toolStripMenuItemWarehouseList.Click += new System.EventHandler(this.toolStripMenuItemWarehouseList_Click);
+            // 
+            // toolStripMenuItemWarehouseComponents
+            // 
+            this.toolStripMenuItemWarehouseComponents.Name = "toolStripMenuItemWarehouseComponents";
+            this.toolStripMenuItemWarehouseComponents.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemWarehouseComponents.Text = "Загруженность складов";
+            this.toolStripMenuItemWarehouseComponents.Click += new System.EventHandler(this.toolStripMenuItemWarehouseComponents_Click);
+            // 
+            // toolStripMenuItemOrdersGroupedByDate
+            // 
+            this.toolStripMenuItemOrdersGroupedByDate.Name = "toolStripMenuItemOrdersGroupedByDate";
+            this.toolStripMenuItemOrdersGroupedByDate.Size = new System.Drawing.Size(363, 34);
+            this.toolStripMenuItemOrdersGroupedByDate.Text = "Общий отчет по всем заказам";
+            this.toolStripMenuItemOrdersGroupedByDate.Click += new System.EventHandler(this.toolStripMenuItemOrdersGroupedByDate_Click);
             // 
             // FormMain
             // 
@@ -222,6 +267,11 @@ namespace FurnitureAssemblyView
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFurnitureList;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFurnituresComponents;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrderList;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemClients;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouses;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFillWarehouses;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseReports;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseList;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWarehouseComponents;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOrdersGroupedByDate;
     }
 }

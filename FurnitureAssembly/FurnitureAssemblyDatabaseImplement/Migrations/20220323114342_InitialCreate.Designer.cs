@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureAssemblyDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureAssemblyDatabase))]
+<<<<<<<< HEAD:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220403184215_InitialCreate.Designer.cs
     [Migration("20220403184215_InitialCreate")]
+========
+    [Migration("20220323114342_InitialCreate")]
+>>>>>>>> lab4BelyaevaHard:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220323114342_InitialCreate.Designer.cs
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +146,54 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponsiblePerson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("WarehouseComponents");
+                });
+
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.FurnitureComponent", b =>
                 {
                     b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Component", "Component")
@@ -180,9 +232,29 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("Furniture");
                 });
 
+<<<<<<<< HEAD:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220403184215_InitialCreate.Designer.cs
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Client", b =>
                 {
                     b.Navigation("Orders");
+========
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Component", "Component")
+                        .WithMany()
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Warehouse", "Warehouse")
+                        .WithMany("WarehouseComponents")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Component");
+
+                    b.Navigation("Warehouse");
+>>>>>>>> lab4BelyaevaHard:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220323114342_InitialCreate.Designer.cs
                 });
 
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Component", b =>
@@ -195,6 +267,11 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("FurnitureComponents");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Navigation("WarehouseComponents");
                 });
 #pragma warning restore 612, 618
         }
