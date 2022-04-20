@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FurnitureAssemblyDatabaseImplement.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class lab5hard : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

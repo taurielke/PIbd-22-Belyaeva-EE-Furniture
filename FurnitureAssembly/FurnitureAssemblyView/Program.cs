@@ -47,6 +47,8 @@ namespace FurnitureAssemblyView
             currentContainer.RegisterType<IOrderStorage, OrderStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IFurnitureStorage, FurnitureStorage>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IWarehouseStorage, WarehouseStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IClientStorage, ClientStorage>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IClientLogic, ClientLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IWarehouseLogic, WarehouseLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IComponentLogic, ComponentLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new HierarchicalLifetimeManager());

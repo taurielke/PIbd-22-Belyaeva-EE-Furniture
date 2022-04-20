@@ -10,12 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureAssemblyDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureAssemblyDatabase))]
-<<<<<<<< HEAD:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220403184215_InitialCreate.Designer.cs
-    [Migration("20220403184215_InitialCreate")]
-========
-    [Migration("20220323114342_InitialCreate")]
->>>>>>>> lab4BelyaevaHard:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220323114342_InitialCreate.Designer.cs
-    partial class InitialCreate
+    [Migration("20220420061110_lab5hard")]
+    partial class lab5hard
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,11 +228,6 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("Furniture");
                 });
 
-<<<<<<<< HEAD:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220403184215_InitialCreate.Designer.cs
-            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Client", b =>
-                {
-                    b.Navigation("Orders");
-========
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.WarehouseComponent", b =>
                 {
                     b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Component", "Component")
@@ -254,7 +245,11 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Warehouse");
->>>>>>>> lab4BelyaevaHard:FurnitureAssembly/FurnitureAssemblyDatabaseImplement/Migrations/20220323114342_InitialCreate.Designer.cs
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Component", b =>

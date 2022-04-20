@@ -16,16 +16,19 @@ namespace FurnitureAssemblyFileImplement
         private readonly string OrderFileName = "Order.xml";
         private readonly string FurnitureFileName = "Furniture.xml";
         private readonly string WarehouseFileName = "Warehouse.xml";
+        private readonly string ClientFileName = "Client.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
         public List <Warehouse> Warehouses { get; set; }
+        public List<Client> Clients { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Furnitures = LoadFurnitures();
             Warehouses = LoadWarehouses();
+            Clients = LoadClients();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -41,6 +44,7 @@ namespace FurnitureAssemblyFileImplement
             SaveOrders();
             SaveFurnitures();
             SaveWarehouses();
+            SaveClients();
         }
         private List<Component> LoadComponents()
         {
@@ -75,6 +79,7 @@ namespace FurnitureAssemblyFileImplement
                         list.Add(new Order
                         {
                             Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                            ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                             FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
                             Count = Convert.ToInt32(elem.Element("Count").Value),
                             Sum = Convert.ToDecimal(elem.Element("Sum").Value),
@@ -88,6 +93,7 @@ namespace FurnitureAssemblyFileImplement
                         list.Add(new Order
                         {
                             Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                            ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                             FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
                             Count = Convert.ToInt32(elem.Element("Count").Value),
                             Sum = Convert.ToDecimal(elem.Element("Sum").Value),
@@ -152,6 +158,28 @@ namespace FurnitureAssemblyFileImplement
             }
             return list;
         }
+
+        private List<Client> LoadClients()
+        {
+            var list = new List<Client>();
+            if (File.Exists(ClientFileName))
+            {
+                var xDocument = XDocument.Load(ClientFileName);
+                var xElements = xDocument.Root.Elements("Client").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Client
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ClientFIO = elem.Element("ClientFIO").Value,
+                        Email = elem.Element("Email").Value,
+                        Password = elem.Element("Password").Value
+                    });
+                }
+            }
+            return list;
+        }
+
         private void SaveComponents()
         {
             if (Components != null)
@@ -176,6 +204,7 @@ namespace FurnitureAssemblyFileImplement
                 {
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
+                    new XElement("ClientId", order.ClientId),
                     new XElement("FurnitureId", order.FurnitureId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
@@ -235,6 +264,24 @@ namespace FurnitureAssemblyFileImplement
                 xDocument.Save(WarehouseFileName);
             }
         }
+        private void SaveClients()
+        {
+            if (Clients != null)
+            {
+                var xElement = new XElement("Clients");
+                foreach (var client in Clients)
+                {
+                    xElement.Add(new XElement("Client",
+                    new XAttribute("Id", client.Id),
+                    new XElement("ClientFIO", client.ClientFIO),
+                    new XElement("Email", client.Email),
+                    new XElement("Password", client.Password)));
+                }
+                var xDocument = new XDocument(xElement);
+                xDocument.Save(ClientFileName);
+            }
+        }
+
 
         public static void Save()
         {
@@ -242,6 +289,7 @@ namespace FurnitureAssemblyFileImplement
             instance.SaveFurnitures();
             instance.SaveComponents();
             instance.SaveWarehouses();
+            instance.SaveClients();
         }
     }
 }
