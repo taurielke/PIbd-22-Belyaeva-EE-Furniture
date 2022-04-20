@@ -32,10 +32,12 @@ namespace FurnitureAssemblyFileImplement.Implements
                 return null;
             }
             return source.Orders
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue
-                && rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-                (model.ClientId.HasValue && rec.ClientId == model.ClientId)).Select(CreateModel).ToList();
+                .Where(rec => rec.FurnitureId.Equals(model.FurnitureId) || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                || (model.ClientId.HasValue && rec.ClientId == model.ClientId.Value)
+                || (model.SearchStatus.HasValue && model.SearchStatus.Value == rec.Status)
+                || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && model.Status == rec.Status))
+                .Select(CreateModel)
+                .ToList();
         }
 
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -88,6 +90,7 @@ namespace FurnitureAssemblyFileImplement.Implements
         {
             order.ClientId = (int)model.ClientId;
             order.FurnitureId = model.FurnitureId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.Sum = model.Sum;
             order.Status = model.Status;
@@ -115,6 +118,8 @@ namespace FurnitureAssemblyFileImplement.Implements
                 ClientFIO = source.Clients.FirstOrDefault(clientFIO => clientFIO.Id == order.ClientId)?.ClientFIO,
                 FurnitureId = order.FurnitureId,
                 FurnitureName = furnitureName,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = source.Implementers.FirstOrDefault(rec => rec.Id == order.ImplementerId)?.ImplementerFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = Enum.GetName(typeof(OrderStatus), order.Status),
