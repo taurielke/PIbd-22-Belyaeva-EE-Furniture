@@ -11,6 +11,7 @@ namespace FurnitureAssemblyListImplement
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
+        public List<Warehouse> Warehouses { get; set; }
         public List<Client> Clients { get; set; }
         public List<Implementer> Implementers { get; set; }
         private DataListSingleton()
@@ -18,6 +19,7 @@ namespace FurnitureAssemblyListImplement
             Components = new List<Component>();
             Orders = new List<Order>();
             Furnitures = new List<Furniture>();
+            Warehouses = new List<Warehouse>();
             Clients = new List<Client>();
             Implementers = new List<Implementer>();
         }

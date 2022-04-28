@@ -15,20 +15,20 @@ namespace FurnitureAssemblyFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string FurnitureFileName = "Furniture.xml";
+        private readonly string WarehouseFileName = "Warehouse.xml";
         private readonly string ClientFileName = "Client.xml";
-        private readonly string ImplementerFileName = "Implementer.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
+        public List <Warehouse> Warehouses { get; set; }
         public List<Client> Clients { get; set; }
-        public List<Implementer> Implementers { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Furnitures = LoadFurnitures();
+            Warehouses = LoadWarehouses();
             Clients = LoadClients();
-            Implementers = LoadImplementers();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -43,8 +43,8 @@ namespace FurnitureAssemblyFileImplement
             SaveComponents();
             SaveOrders();
             SaveFurnitures();
+            SaveWarehouses();
             SaveClients();
-            SaveImplementers();
         }
         private List<Component> LoadComponents()
         {
@@ -81,7 +81,6 @@ namespace FurnitureAssemblyFileImplement
                             Id = Convert.ToInt32(elem.Attribute("Id").Value),
                             ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                             FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
-                            ImplementerId = Convert.ToInt32(elem.Element("ImplementerId").Value),
                             Count = Convert.ToInt32(elem.Element("Count").Value),
                             Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                             Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
@@ -94,6 +93,7 @@ namespace FurnitureAssemblyFileImplement
                         list.Add(new Order
                         {
                             Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                            ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                             FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
                             Count = Convert.ToInt32(elem.Element("Count").Value),
                             Sum = Convert.ToDecimal(elem.Element("Sum").Value),
@@ -130,6 +130,34 @@ namespace FurnitureAssemblyFileImplement
             }
             return list;
         }
+        private List<Warehouse> LoadWarehouses()
+        {
+            var list = new List<Warehouse>();
+            if (File.Exists(WarehouseFileName))
+            {
+                var xDocument = XDocument.Load(WarehouseFileName);
+                var xElements = xDocument.Root.Elements("Warehouse").ToList();
+                foreach (var elem in xElements)
+                {
+                    var warComp = new Dictionary<int, int>();
+                    foreach (var component in
+                        elem.Element("WarehouseComponents").Elements("WarehouseComponent").ToList())
+                    {
+                        warComp.Add(Convert.ToInt32(component.Element("Key").Value),
+                            Convert.ToInt32(component.Element("Value").Value));
+                    }
+                    list.Add(new Warehouse
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        WarehouseName = elem.Element("WarehouseName").Value,
+                        ResponsiblePerson = elem.Element("ResponsiblePerson").Value,
+                        DateCreate = DateTime.Parse(elem.Element("DateCreate").Value),
+                        WarehouseComponents = warComp
+                    });
+                }
+            }
+            return list;
+        }
 
         private List<Client> LoadClients()
         {
@@ -151,26 +179,7 @@ namespace FurnitureAssemblyFileImplement
             }
             return list;
         }
-        private List<Implementer> LoadImplementers()
-        {
-            var list = new List<Implementer>();
-            if (File.Exists(ImplementerFileName))
-            {
-                XDocument xDocument = XDocument.Load(ImplementerFileName);
-                var xElements = xDocument.Root.Elements("Implementer").ToList();
-                foreach (var elem in xElements)
-                {
-                    list.Add(new Implementer
-                    {
-                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
-                        ImplementerFIO = elem.Element("ImplementerFIO").Value,
-                        WorkingTime = Convert.ToInt32(elem.Attribute("WorkingTime").Value),
-                        PauseTime = Convert.ToInt32(elem.Attribute("PauseTime").Value),
-                    });
-                }
-            }
-            return list;
-        }
+
         private void SaveComponents()
         {
             if (Components != null)
@@ -197,7 +206,6 @@ namespace FurnitureAssemblyFileImplement
                     new XAttribute("Id", order.Id),
                     new XElement("ClientId", order.ClientId),
                     new XElement("FurnitureId", order.FurnitureId),
-                    new XElement("ImplementerId", order.ImplementerId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
                     new XElement("Status", order.Status),
@@ -231,6 +239,31 @@ namespace FurnitureAssemblyFileImplement
                 xDocument.Save(FurnitureFileName);
             }
         }
+        private void SaveWarehouses()
+        {
+            if (Warehouses != null)
+            {
+                var xElement = new XElement("Warehouses");
+                foreach (var warehouse in Warehouses)
+                {
+                    var compElement = new XElement("WarehouseComponents");
+                    foreach (var component in warehouse.WarehouseComponents)
+                    {
+                        compElement.Add(new XElement("WarehouseComponent",
+                            new XElement("Key", component.Key),
+                            new XElement("Value", component.Value)));
+                    }
+                    xElement.Add(new XElement("Warehouse",
+                        new XAttribute("Id", warehouse.Id),
+                        new XElement("WarehouseName", warehouse.WarehouseName),
+                        new XElement("ResponsiblePerson", warehouse.ResponsiblePerson),
+                        new XElement("DateCreate", warehouse.DateCreate),
+                        compElement));
+                }
+                var xDocument = new XDocument(xElement);
+                xDocument.Save(WarehouseFileName);
+            }
+        }
         private void SaveClients()
         {
             if (Clients != null)
@@ -248,31 +281,15 @@ namespace FurnitureAssemblyFileImplement
                 xDocument.Save(ClientFileName);
             }
         }
-        private void SaveImplementers()
-        {
-            if (Implementers != null)
-            {
-                var xElement = new XElement("Implementers");
-                foreach (var implementer in Implementers)
-                {
-                    xElement.Add(new XElement("Implementer",
-                    new XAttribute("Id", implementer.Id),
-                    new XElement("ImplementerFIO", implementer.ImplementerFIO),
-                    new XElement("WorkingTime", implementer.WorkingTime),
-                    new XElement("PauseTime", implementer.PauseTime)));
-                }
-                XDocument xDocument = new XDocument(xElement);
-                xDocument.Save(ImplementerFileName);
-            }
-        }
 
-        public static void Save() 
+
+        public static void Save()
         {
             instance.SaveOrders();
             instance.SaveFurnitures();
             instance.SaveComponents();
+            instance.SaveWarehouses();
             instance.SaveClients();
-            instance.SaveImplementers();
         }
     }
 }

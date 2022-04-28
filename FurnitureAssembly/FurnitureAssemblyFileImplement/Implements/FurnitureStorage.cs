@@ -32,10 +32,7 @@ namespace FurnitureAssemblyFileImplement.Implements
             {
                 return null;
             }
-            return source.Furnitures
-                .Where(rec => rec.FurnitureName.Contains(model.FurnitureName))
-                .Select(CreateModel)
-                .ToList();
+            return source.Furnitures.Where(rec => rec.FurnitureName.Contains(model.FurnitureName)).Select(CreateModel).ToList();
 
         }
 

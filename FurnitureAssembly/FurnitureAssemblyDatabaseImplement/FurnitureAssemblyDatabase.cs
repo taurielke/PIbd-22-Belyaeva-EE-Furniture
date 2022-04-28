@@ -20,6 +20,8 @@ namespace FurnitureAssemblyDatabaseImplement
         public virtual DbSet<Furniture> Furnitures { set; get; }
         public virtual DbSet<FurnitureComponent> FurnitureComponents { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
+        public virtual DbSet<Warehouse> Warehouses { set; get; }
+        public virtual DbSet<WarehouseComponent> WarehouseComponents { set; get; }
         public virtual DbSet<Client> Clients { set; get; }
         public virtual DbSet<Implementer> Implementers { get; set; }
     }
