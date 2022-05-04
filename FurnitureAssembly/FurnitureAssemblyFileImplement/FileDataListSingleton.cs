@@ -13,15 +13,18 @@ namespace FurnitureAssemblyFileImplement
     {
         private static FileDataListSingleton instance;
         private readonly string ComponentFileName = "Component.xml";
+        private readonly string ImplementerFileName = "Implementer.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string FurnitureFileName = "Furniture.xml";
         private readonly string WarehouseFileName = "Warehouse.xml";
         private readonly string ClientFileName = "Client.xml";
+
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
         public List <Warehouse> Warehouses { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
@@ -29,6 +32,7 @@ namespace FurnitureAssemblyFileImplement
             Furnitures = LoadFurnitures();
             Warehouses = LoadWarehouses();
             Clients = LoadClients();
+            Implementers = LoadImplementers();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -45,6 +49,7 @@ namespace FurnitureAssemblyFileImplement
             SaveFurnitures();
             SaveWarehouses();
             SaveClients();
+            SaveImplementers();
         }
         private List<Component> LoadComponents()
         {
@@ -81,6 +86,7 @@ namespace FurnitureAssemblyFileImplement
                             Id = Convert.ToInt32(elem.Attribute("Id").Value),
                             ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                             FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
+                            ImplementerId = Convert.ToInt32(elem.Element("ImplementerId").Value),
                             Count = Convert.ToInt32(elem.Element("Count").Value),
                             Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                             Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), elem.Element("Status").Value),
@@ -158,7 +164,6 @@ namespace FurnitureAssemblyFileImplement
             }
             return list;
         }
-
         private List<Client> LoadClients()
         {
             var list = new List<Client>();
@@ -174,6 +179,26 @@ namespace FurnitureAssemblyFileImplement
                         ClientFIO = elem.Element("ClientFIO").Value,
                         Email = elem.Element("Email").Value,
                         Password = elem.Element("Password").Value
+                    });
+                }
+            }
+            return list;
+        }
+        private List<Implementer> LoadImplementers()
+        {
+            var list = new List<Implementer>();
+            if (File.Exists(ImplementerFileName))
+            {
+                XDocument xDocument = XDocument.Load(ImplementerFileName);
+                var xElements = xDocument.Root.Elements("Implementer").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Implementer
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        ImplementerFIO = elem.Element("ImplementerFIO").Value,
+                        WorkingTime = Convert.ToInt32(elem.Attribute("WorkingTime").Value),
+                        PauseTime = Convert.ToInt32(elem.Attribute("PauseTime").Value),
                     });
                 }
             }
@@ -206,6 +231,7 @@ namespace FurnitureAssemblyFileImplement
                     new XAttribute("Id", order.Id),
                     new XElement("ClientId", order.ClientId),
                     new XElement("FurnitureId", order.FurnitureId),
+                    new XElement("ImplementerId", order.ImplementerId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
                     new XElement("Status", order.Status),
@@ -282,6 +308,23 @@ namespace FurnitureAssemblyFileImplement
             }
         }
 
+        private void SaveImplementers()
+        {
+            if (Implementers != null)
+            {
+                var xElement = new XElement("Implementers");
+                foreach (var implementer in Implementers)
+                {
+                    xElement.Add(new XElement("Implementer",
+                    new XAttribute("Id", implementer.Id),
+                    new XElement("ImplementerFIO", implementer.ImplementerFIO),
+                    new XElement("WorkingTime", implementer.WorkingTime),
+                    new XElement("PauseTime", implementer.PauseTime)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(ImplementerFileName);
+            }
+        }
 
         public static void Save()
         {
@@ -290,6 +333,7 @@ namespace FurnitureAssemblyFileImplement
             instance.SaveComponents();
             instance.SaveWarehouses();
             instance.SaveClients();
+            instance.SaveImplementers();
         }
     }
 }

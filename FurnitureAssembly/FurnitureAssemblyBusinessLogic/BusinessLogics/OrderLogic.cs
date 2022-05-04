@@ -58,16 +58,13 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
             {
                 throw new Exception("Не найден заказ");
             }
-            if (order.Status != Enum.GetName(typeof(OrderStatus), 0))
+            if (order.Status != Enum.GetName(typeof(OrderStatus), 0) && order.Status != Enum.GetName(typeof(OrderStatus), 4))
             {
-                throw new Exception("Заказ не в статусе \"Принят\"");
+                throw new Exception("Заказ не в статусе \"Принят\" и не в \"Требуются материалы\"");
             }
             var furniture = _furnitureStorage.GetElement(new FurnitureBindingModel { Id = order.FurnitureId });
-            if (!_warehouseStorage.CheckComponentsAmount(order.Count, furniture.FurnitureComponents))
-            {
-                throw new Exception("Недостаточно компонентов на складе - невозможно принять заказ в работу, пополните склад");
-            }
-            _orderStorage.Update(new OrderBindingModel
+            
+            var orderCheck = new OrderBindingModel
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
@@ -76,9 +73,22 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Выполняется
-            });
+            }; 
+            
+            try
+            {
+                if (_warehouseStorage.CheckComponentsAmount(orderCheck.Count, furniture.FurnitureComponents))
+                {
+                    orderCheck.Status = OrderStatus.Выполняется;
+                    orderCheck.DateImplement = DateTime.Now;
+                    _orderStorage.Update(orderCheck);
+                }
+            }
+            catch
+            {
+                orderCheck.Status = OrderStatus.ТребуютсяМатериалы;
+                _orderStorage.Update(orderCheck);
+            }
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
