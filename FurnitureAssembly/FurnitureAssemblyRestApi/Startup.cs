@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using FurnitureAssemblyBusinessLogic.MailWorker;
+using FurnitureAssemblyContracts.BindingModels;
 
 namespace FurnitureAssemblyRestApi
 {
@@ -25,9 +27,12 @@ namespace FurnitureAssemblyRestApi
             services.AddTransient<IClientStorage, ClientStorage>();
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IFurnitureStorage, FurnitureStorage>();
+            services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<IClientLogic, ClientLogic>();
             services.AddTransient<IFurnitureLogic, FurnitureLogic>();
+            services.AddTransient<IMessageInfoLogic, MessageInfoLogic>();
+            services.AddSingleton<AbstractMailWorker, MailKitWorker>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +60,16 @@ namespace FurnitureAssemblyRestApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            var mailSender = app.ApplicationServices.GetService<AbstractMailWorker>();
+            mailSender.MailConfig(new MailConfigBindingModel
+            {
+                MailLogin = Configuration?.GetSection("MailLogin")?.Value.ToString(),
+                MailPassword = Configuration?.GetSection("MailPassword")?.Value.ToString(),
+                SmtpClientHost = Configuration?.GetSection("SmtpClientHost")?.Value.ToString(),
+                SmtpClientPort = Convert.ToInt32(Configuration?.GetSection("SmtpClientPort")?.Value.ToString()),
+                PopHost = Configuration?.GetSection("PopHost")?.Value.ToString(),
+                PopPort = Convert.ToInt32(Configuration?.GetSection("PopPort")?.Value.ToString())
             });
         }
     }
