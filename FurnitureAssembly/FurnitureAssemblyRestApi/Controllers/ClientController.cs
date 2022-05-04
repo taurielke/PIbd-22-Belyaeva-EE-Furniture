@@ -10,9 +10,11 @@ namespace FurnitureAssemblyRestApi.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientLogic _logic;
-        public ClientController(IClientLogic logic)
+        private readonly IMessageInfoLogic _messageInfoLogic;
+        public ClientController(IClientLogic logic, IMessageInfoLogic messageInfoLogic)
         {
             _logic = logic;
+            _messageInfoLogic = messageInfoLogic;
         }
         [HttpGet]
         public ClientViewModel Login(string login, string password)
@@ -28,5 +30,7 @@ namespace FurnitureAssemblyRestApi.Controllers
         public void Register(ClientBindingModel model) => _logic.CreateOrUpdate(model);
         [HttpPost]
         public void UpdateData(ClientBindingModel model) => _logic.CreateOrUpdate(model);
+        [HttpGet]
+        public List<MessageInfoViewModel> GetClientsMessagesInfo(int clientId) => _messageInfoLogic.Read(new MessageInfoBindingModel { ClientId = clientId });
     }
 }

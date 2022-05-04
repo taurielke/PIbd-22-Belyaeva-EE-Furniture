@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureAssemblyDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureAssemblyDatabase))]
-    [Migration("20220420060139_lab6")]
-    partial class lab6
+    [Migration("20220502140832_lab7")]
+    partial class lab7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,6 +127,33 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.ToTable("Implementers");
                 });
 
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessagesInfo");
+                });
+
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -186,6 +213,15 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("Component");
 
                     b.Navigation("Furniture");
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Order", b =>
