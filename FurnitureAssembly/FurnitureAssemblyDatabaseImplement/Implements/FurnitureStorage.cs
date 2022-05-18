@@ -15,12 +15,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
         public List<FurnitureViewModel> GetFullList()
         {
             using var context = new FurnitureAssemblyDatabase();
-            return context.Furnitures
-            .Include(rec => rec.FurnitureComponents)
-            .ThenInclude(rec => rec.Component)
-            .ToList()
-            .Select(CreateModel)
-            .ToList();
+            return context.Furnitures.Include(rec => rec.FurnitureComponents).ThenInclude(rec => rec.Component).ToList().Select(CreateModel).ToList();
         }
         public List<FurnitureViewModel> GetFilteredList(FurnitureBindingModel model)
         {
@@ -29,13 +24,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
                 return null;
             }
             using var context = new FurnitureAssemblyDatabase();
-            return context.Furnitures
-                .Include(rec => rec.FurnitureComponents)
-                .ThenInclude(rec => rec.Component)
-                .Where(rec => rec.FurnitureName.Contains(model.FurnitureName))
-                .ToList()
-                .Select(CreateModel)
-                .ToList();
+            return context.Furnitures.Include(rec => rec.FurnitureComponents).ThenInclude(rec => rec.Component).Where(rec => rec.FurnitureName.Contains(model.FurnitureName)).ToList().Select(CreateModel).ToList();
         }
         public FurnitureViewModel GetElement(FurnitureBindingModel model)
         {
@@ -44,10 +33,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
                 return null;
             }
             using var context = new FurnitureAssemblyDatabase();
-            var furniture = context.Furnitures
-                .Include(rec => rec.FurnitureComponents)
-                .ThenInclude(rec => rec.Component)
-                .FirstOrDefault(rec => rec.FurnitureName == model.FurnitureName || rec.Id == model.Id);
+            var furniture = context.Furnitures.Include(rec => rec.FurnitureComponents).ThenInclude(rec => rec.Component).FirstOrDefault(rec => rec.FurnitureName == model.FurnitureName || rec.Id == model.Id);
             return furniture != null ? CreateModel(furniture) : null;
         }
         public void Insert(FurnitureBindingModel model)
@@ -97,8 +83,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
         public void Delete(FurnitureBindingModel model)
         {
             using var context = new FurnitureAssemblyDatabase();
-            Furniture element = context.Furnitures.FirstOrDefault(rec => rec.Id ==
-            model.Id);
+            Furniture element = context.Furnitures.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 context.Furnitures.Remove(element);
@@ -109,8 +94,7 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
                 throw new Exception("Элемент не найден");
             }
         }
-        private static Furniture CreateModel(FurnitureBindingModel model, Furniture furniture,
-       FurnitureAssemblyDatabase context)
+        private static Furniture CreateModel(FurnitureBindingModel model, Furniture furniture, FurnitureAssemblyDatabase context)
         {
             furniture.FurnitureName = model.FurnitureName;
             furniture.Price = model.Price;

@@ -53,6 +53,38 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 // отдыхаем
                 Thread.Sleep(implementer.PauseTime);
             }
+
+            // ищем заказы, which need material
+            var needMaterialsOrders = await Task.Run(() => _orderLogic.Read(new OrderBindingModel
+            {
+                ImplementerId = implementer.Id,
+                Status = OrderStatus.ТребуютсяМатериалы
+            }));
+            foreach (var order in needMaterialsOrders)
+            {
+                _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                {
+                    OrderId = order.Id,
+                    ImplementerId = implementer.Id
+                });
+                if (_orderLogic.Read(new OrderBindingModel { Id = order.Id })?[0].Status == "ТребуютсяМатериалы")
+                {
+                    continue;
+                }
+                // делаем работу заново
+                Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                _orderLogic.FinishOrder(new ChangeStatusBindingModel
+                {
+                    OrderId = order.Id,
+                    ImplementerId = implementer.Id
+                });
+                // отдыхаем
+                Thread.Sleep(implementer.PauseTime);
+            }
+
+
+
+
             await Task.Run(() =>
             {
                 while (!orders.IsEmpty)
@@ -65,6 +97,10 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                             OrderId = order.Id,
                             ImplementerId = implementer.Id
                         });
+                        if (_orderLogic.Read(new OrderBindingModel { Id = order.Id })?[0].Status == "ТребуютсяМатериалы")
+                        {
+                            continue;
+                        }
                         // делаем работу
                         Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
                         _orderLogic.FinishOrder(new ChangeStatusBindingModel
