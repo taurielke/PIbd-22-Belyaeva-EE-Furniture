@@ -39,12 +39,13 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemFurniture = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClients = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemImplementers = new System.Windows.Forms.ToolStripMenuItem();
+            this.электронныеПисьмаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReports = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnitureList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnituresComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOrderList = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemLaunchWork = new System.Windows.Forms.ToolStripMenuItem();
-            this.электронныеПисьмаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemCreateBackup = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +97,8 @@ namespace FurnitureAssemblyView
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemReports,
-            this.ToolStripMenuItemLaunchWork});
+            this.ToolStripMenuItemLaunchWork,
+            this.ToolStripMenuItemCreateBackup});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1324, 33);
@@ -143,6 +145,13 @@ namespace FurnitureAssemblyView
             this.ToolStripMenuItemImplementers.Text = "Исполнители";
             this.ToolStripMenuItemImplementers.Click += new System.EventHandler(this.ToolStripMenuItemImplementers_Click);
             // 
+            // электронныеПисьмаToolStripMenuItem
+            // 
+            this.электронныеПисьмаToolStripMenuItem.Name = "электронныеПисьмаToolStripMenuItem";
+            this.электронныеПисьмаToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
+            this.электронныеПисьмаToolStripMenuItem.Text = "Электронные письма";
+            this.электронныеПисьмаToolStripMenuItem.Click += new System.EventHandler(this.электронныеПисьмаToolStripMenuItem_Click);
+            // 
             // toolStripMenuItemReports
             // 
             this.toolStripMenuItemReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -181,12 +190,12 @@ namespace FurnitureAssemblyView
             this.ToolStripMenuItemLaunchWork.Text = "Запуск работ";
             this.ToolStripMenuItemLaunchWork.Click += new System.EventHandler(this.ToolStripMenuItemLaunchWork_Click);
             // 
-            // электронныеПисьмаToolStripMenuItem
+            // ToolStripMenuItemCreateBackup
             // 
-            this.электронныеПисьмаToolStripMenuItem.Name = "электронныеПисьмаToolStripMenuItem";
-            this.электронныеПисьмаToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
-            this.электронныеПисьмаToolStripMenuItem.Text = "Электронные письма";
-            this.электронныеПисьмаToolStripMenuItem.Click += new System.EventHandler(this.электронныеПисьмаToolStripMenuItem_Click);
+            this.ToolStripMenuItemCreateBackup.Name = "ToolStripMenuItemCreateBackup";
+            this.ToolStripMenuItemCreateBackup.Size = new System.Drawing.Size(145, 29);
+            this.ToolStripMenuItemCreateBackup.Text = "Создать бекап";
+            this.ToolStripMenuItemCreateBackup.Click += new System.EventHandler(this.ToolStripMenuItemCreateBackup_Click);
             // 
             // FormMain
             // 
@@ -227,5 +236,6 @@ namespace FurnitureAssemblyView
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemImplementers;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemLaunchWork;
         private System.Windows.Forms.ToolStripMenuItem электронныеПисьмаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemCreateBackup;
     }
 }
