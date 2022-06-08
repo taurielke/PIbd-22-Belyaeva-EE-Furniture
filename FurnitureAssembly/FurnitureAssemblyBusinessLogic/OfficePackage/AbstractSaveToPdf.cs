@@ -38,11 +38,42 @@ namespace FurnitureAssemblyBusinessLogic.OfficePackage
             }
             SavePdf(info);
         }
+
+        public void CreateDocOrdersGroupedByDate(PdfInfo info)
+        {
+            CreatePdf(info);
+            CreateParagraph(new PdfParagraph
+            {
+                Text = info.Title,
+                Style = "NormalTitle"
+            });
+            CreateParagraph(new PdfParagraph
+            {
+                Text = $"Заказы, объединенные по датам",
+                Style = "Normal"
+            });
+            CreateTable(new List<string> { "3cm", "3cm", "3cm" });
+            CreateRow(new PdfRowParameters
+            {
+                Texts = new List<string> { "Дата заказов", "Количество заказов", "Сумма" },
+                Style = "NormalTitle",
+                ParagraphAlignment = PdfParagraphAlignmentType.Center
+            });
+            foreach (var order in info.OrdersGroupedByDate)
+            {
+                CreateRow(new PdfRowParameters
+                {
+                    Texts = new List<string> { order.DateCreate.ToShortDateString(), order.Count.ToString(), order.Sum.ToString() },
+                    Style = "Normal",
+                    ParagraphAlignment = PdfParagraphAlignmentType.Left
+                });
+            }
+            SavePdf(info);
+        }
         protected abstract void CreatePdf(PdfInfo info);
         protected abstract void CreateParagraph(PdfParagraph paragraph);
         protected abstract void CreateTable(List<string> columns);
         protected abstract void CreateRow(PdfRowParameters rowParameters);
         protected abstract void SavePdf(PdfInfo info);
-
     }
 }

@@ -11,6 +11,7 @@ namespace FurnitureAssemblyRestApi.Controllers
     {
         private readonly IClientLogic _logic;
         private readonly IMessageInfoLogic _messageInfoLogic;
+        private readonly int messagesPage = 3;
         public ClientController(IClientLogic logic, IMessageInfoLogic messageInfoLogic)
         {
             _logic = logic;
@@ -31,6 +32,16 @@ namespace FurnitureAssemblyRestApi.Controllers
         [HttpPost]
         public void UpdateData(ClientBindingModel model) => _logic.CreateOrUpdate(model);
         [HttpGet]
-        public List<MessageInfoViewModel> GetClientsMessagesInfo(int clientId) => _messageInfoLogic.Read(new MessageInfoBindingModel { ClientId = clientId });
+        public (List<MessageInfoViewModel>, bool) GetClientsMessageInfo(int clientId, int page)
+        {
+            var list = _messageInfoLogic.Read(new MessageInfoBindingModel
+            {
+                ClientId = clientId,
+                ToSkip = (page - 1) * messagesPage,
+                ToTake = messagesPage + 1
+            }).ToList();
+            var isNext = !(list.Count() <= messagesPage);
+            return (list.Take(messagesPage).ToList(), isNext);
+        }
     }
 }

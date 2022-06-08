@@ -13,11 +13,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
     public class OrderLogic : IOrderLogic
     {
         private readonly IOrderStorage _orderStorage;
+        private readonly IWarehouseStorage _warehouseStorage;
+        private readonly IFurnitureStorage _furnitureStorage;
         private readonly IClientStorage _clientStorage;
         private readonly AbstractMailWorker _abstractMailWorker;
-        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, AbstractMailWorker abstractMailWorker)
+        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, AbstractMailWorker abstractMailWorker, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
+            _warehouseStorage = warehouseStorage;
+            _furnitureStorage = furnitureStorage;
             _clientStorage = clientStorage;
             _abstractMailWorker = abstractMailWorker;
         }
@@ -67,11 +71,13 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
             {
                 throw new Exception("Не найден заказ");
             }
-            if (order.Status != Enum.GetName(typeof(OrderStatus), 0))
+            if (order.Status != Enum.GetName(typeof(OrderStatus), 0) && order.Status != Enum.GetName(typeof(OrderStatus), 4))
             {
-                throw new Exception("Заказ не в статусе \"Принят\"");
+                throw new Exception("Заказ не в статусе \"Принят\" и не в \"Требуются материалы\"");
             }
-            _orderStorage.Update(new OrderBindingModel
+            var furniture = _furnitureStorage.GetElement(new FurnitureBindingModel { Id = order.FurnitureId });
+
+            var orderCheck = new OrderBindingModel
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
@@ -80,18 +86,32 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Выполняется
-            });
-            _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            };
+
+            try
             {
-                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                if (_warehouseStorage.CheckComponentsAmount(orderCheck.Count, furniture.FurnitureComponents))
                 {
-                    Id = order.ClientId
-                })?.Email,
-                Subject = $"Заказ №{order.Id}",
-                Text = $"Заказ №{order.Id} передан в работу."
-            });
+                    orderCheck.Status = OrderStatus.Выполняется;
+                    orderCheck.DateImplement = DateTime.Now;
+                    _orderStorage.Update(orderCheck);
+                    _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+                    {
+                        MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                        {
+                            Id = order.ClientId
+                        })?.Email,
+                        Subject = $"Смена статуса заказа№ {order.Id}",
+                        Text = $"Статус изменен на: {OrderStatus.Выполняется}"
+                    });
+                }
+            }
+            catch
+            {
+                orderCheck.Status = OrderStatus.ТребуютсяМатериалы;
+                _orderStorage.Update(orderCheck);
+            }
+
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)

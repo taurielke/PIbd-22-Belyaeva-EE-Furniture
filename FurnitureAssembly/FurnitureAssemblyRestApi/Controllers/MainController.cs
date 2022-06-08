@@ -13,10 +13,12 @@ namespace FurnitureAssemblyRestApi.Controllers
     {
         private readonly IOrderLogic _order;
         private readonly IFurnitureLogic _furniture;
-        public MainController(IOrderLogic order, IFurnitureLogic furniture)
+        private readonly IMessageInfoLogic _messageInfoLogic;
+        public MainController(IOrderLogic order, IFurnitureLogic furniture, IMessageInfoLogic messageInfoLogic)
         {
             _order = order;
             _furniture = furniture;
+            _messageInfoLogic = messageInfoLogic;
         }
         [HttpGet]
         public List<FurnitureViewModel> GetFurnitureList() => _furniture.Read(null)?.ToList();
