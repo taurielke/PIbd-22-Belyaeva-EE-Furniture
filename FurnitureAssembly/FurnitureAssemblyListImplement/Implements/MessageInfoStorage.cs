@@ -17,38 +17,58 @@ namespace FurnitureAssemblyListImplement.Implements
         {
             source = DataListSingleton.GetInstance();
         }
+        public List<MessageInfoViewModel> GetFullList()
+        {
+            var result = new List<MessageInfoViewModel>();
+            foreach (var message in source.MessagesInfo)
+            {
+                result.Add(CreateModel(message));
+            }
+            return result;
+        }
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
+            int toSkip = model.ToSkip ?? 0;
+            int toTake = model.ToTake ?? source.MessagesInfo.Count;
             var result = new List<MessageInfoViewModel>();
-            foreach (var messageInfo in source.MessagesInfo)
+            foreach (var message in source.MessagesInfo)
             {
-                if ((model.ClientId.HasValue && messageInfo.ClientId == model.ClientId) ||
-                    (!model.ClientId.HasValue && messageInfo.DateDelivery.Date == model.DateDelivery.Date))
+                if ((model.ClientId.HasValue && message.ClientId == model.ClientId)
+                    || (!model.ClientId.HasValue && (model.ToSkip.HasValue && model.ToTake.HasValue || message.DateDelivery.Date == model.DateDelivery.Date)))
                 {
-                    result.Add(CreateModel(messageInfo));
+                    if (toSkip > 0)
+                    {
+                        toSkip--;
+                        continue;
+                    }
+                    if (toTake > 0)
+                    {
+                        result.Add(CreateModel(message));
+                        toTake--;
+                    }
                 }
-            }
-            if (result.Count > 0)
-            {
-                return result;
-            }
-            return null;
-        }
-
-        public List<MessageInfoViewModel> GetFullList()
-        {
-            var result = new List<MessageInfoViewModel>();
-            foreach (var messageInfo in source.MessagesInfo)
-            {
-                result.Add(CreateModel(messageInfo));
             }
             return result;
         }
-
+        public MessageInfoViewModel GetElement(MessageInfoBindingModel model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+            foreach (var message in source.MessagesInfo)
+            {
+                if (message.MessageId == model.MessageId)
+                {
+                    return CreateModel(message);
+                }
+            }
+            return null;
+        }
         public void Insert(MessageInfoBindingModel model)
         {
             if (model == null)
@@ -57,26 +77,46 @@ namespace FurnitureAssemblyListImplement.Implements
             }
             source.MessagesInfo.Add(CreateModel(model, new MessageInfo()));
         }
-
-        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo messageInfo)
+        public void Update(MessageInfoBindingModel model)
         {
-            messageInfo.MessageId = model.MessageId;
-            messageInfo.ClientId = model.ClientId;
-            messageInfo.SenderName = model.FromMailAddress;
-            messageInfo.DateDelivery = model.DateDelivery;
-            messageInfo.Subject = model.Subject;
-            messageInfo.Body = model.Body;
-            return messageInfo;
+            MessageInfo tempMessage = null;
+            foreach (var message in source.MessagesInfo)
+            {
+                if (message.MessageId == model.MessageId)
+                {
+                    tempMessage = message;
+                }
+            }
+            if (tempMessage == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            CreateModel(model, tempMessage);
         }
-        private static MessageInfoViewModel CreateModel(MessageInfo messageInfo)
+        private MessageInfo CreateModel(MessageInfoBindingModel model,
+            MessageInfo message)
+        {
+            message.MessageId = model.MessageId;
+            message.SenderName = model.FromMailAddress;
+            message.Body = model.Body;
+            message.ClientId = model.ClientId;
+            message.DateDelivery = model.DateDelivery;
+            message.Subject = model.Subject;
+            message.IsRead = model.IsRead;
+            message.Reply = model.Reply;
+            return message;
+        }
+        private MessageInfoViewModel CreateModel(MessageInfo message)
         {
             return new MessageInfoViewModel
             {
-                MessageId = messageInfo.MessageId,
-                SenderName = messageInfo.SenderName,
-                DateDelivery = messageInfo.DateDelivery,
-                Subject = messageInfo.Subject,
-                Body = messageInfo.Body
+                MessageId = message.MessageId,
+                Body = message.Body,
+                DateDelivery = message.DateDelivery,
+                SenderName = message.SenderName,
+                Subject = message.Subject,
+                Reply = message.Reply,
+                IsRead = message.IsRead
             };
         }
     }

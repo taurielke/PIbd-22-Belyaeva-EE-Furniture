@@ -22,5 +22,11 @@ namespace FurnitureAssemblyContracts.ViewModels
 
         [DisplayName("Текст")]
         public string Body { get; set; }
+
+        [DisplayName("Статус")]
+        public bool IsRead { get; set; }
+
+        [DisplayName("Ответ")]
+        public string Reply { get; set; }
     }
 }

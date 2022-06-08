@@ -12,22 +12,37 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
 {
     public class MessageInfoLogic : IMessageInfoLogic
     {
-        private readonly IMessageInfoStorage _messageInfoStorage;
+        private readonly IMessageInfoStorage messageInfoStorage;
         public MessageInfoLogic(IMessageInfoStorage messageInfoStorage)
         {
-            _messageInfoStorage = messageInfoStorage;
+            this.messageInfoStorage = messageInfoStorage;
         }
         public List<MessageInfoViewModel> Read(MessageInfoBindingModel model)
         {
             if (model == null)
             {
-                return _messageInfoStorage.GetFullList();
+                return messageInfoStorage.GetFullList();
             }
-            return _messageInfoStorage.GetFilteredList(model);
+            if (!string.IsNullOrEmpty(model.MessageId))
+            {
+                return new List<MessageInfoViewModel> { messageInfoStorage.GetElement(model) };
+            }
+            return messageInfoStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(MessageInfoBindingModel model)
         {
-            _messageInfoStorage.Insert(model);
+            var element = messageInfoStorage.GetElement(new MessageInfoBindingModel
+            {
+                MessageId = model.MessageId
+            });
+            if (element != null)
+            {
+                messageInfoStorage.Update(model);
+            }
+            else
+            {
+                messageInfoStorage.Insert(model);
+            }
         }
     }
 }

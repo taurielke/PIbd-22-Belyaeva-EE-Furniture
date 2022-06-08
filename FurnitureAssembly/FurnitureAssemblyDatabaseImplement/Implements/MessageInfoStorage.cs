@@ -14,17 +14,10 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
     {
         public List<MessageInfoViewModel> GetFullList()
         {
-            using var context = new FurnitureAssemblyDatabase();
-            return context.MessagesInfo
-            .Select(rec => new MessageInfoViewModel
+            using (var context = new FurnitureAssemblyDatabase())
             {
-                MessageId = rec.MessageId,
-                SenderName = rec.SenderName,
-                DateDelivery = rec.DateDelivery,
-                Subject = rec.Subject,
-                Body = rec.Body
-            })
-            .ToList();
+                return context.Messages.Select(CreateModel).ToList();
+            }
         }
         public List<MessageInfoViewModel> GetFilteredList(MessageInfoBindingModel model)
         {
@@ -32,38 +25,84 @@ namespace FurnitureAssemblyDatabaseImplement.Implements
             {
                 return null;
             }
-            using var context = new FurnitureAssemblyDatabase();
-            return context.MessagesInfo
-            .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
-            (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
-            .Select(rec => new MessageInfoViewModel
+            using (var context = new FurnitureAssemblyDatabase())
             {
-                MessageId = rec.MessageId,
-                SenderName = rec.SenderName,
-                DateDelivery = rec.DateDelivery,
-                Subject = rec.Subject,
-                Body = rec.Body
-            })
-            .ToList();
+                if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+                {
+                    return context.Messages.Skip((int)model.ToSkip).Take((int)model.ToTake)
+                    .Select(CreateModel).ToList();
+                }
+
+                return context.Messages.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+                || (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
+                    .Skip(model.ToSkip ?? 0).Take(model.ToTake ?? context.Messages.Count())
+                .Select(CreateModel)
+                .ToList();
+            }
+        }
+        public MessageInfoViewModel GetElement(MessageInfoBindingModel model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+            using (var context = new FurnitureAssemblyDatabase())
+            {
+                var message = context.Messages.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+                return message != null ? CreateModel(message) : null;
+            }
         }
         public void Insert(MessageInfoBindingModel model)
         {
-            using var context = new FurnitureAssemblyDatabase();
-            MessageInfo element = context.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
-            if (element != null)
+            using (var context = new FurnitureAssemblyDatabase())
             {
-                throw new Exception("Уже есть письмо с таким идентификатором");
+                MessageInfo element = context.Messages.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+                if (element != null)
+                {
+                    throw new Exception("Уже есть письмо с таким идентификатором");
+                }
+                context.Messages.Add(CreateModel(model, new MessageInfo()));
+                context.SaveChanges();
             }
-            context.MessagesInfo.Add(new MessageInfo
+        }
+        public void Update(MessageInfoBindingModel model)
+        {
+            using (var context = new FurnitureAssemblyDatabase())
+            {
+                MessageInfo element = context.Messages.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+            }
+        }
+
+        private MessageInfoViewModel CreateModel(MessageInfo model)
+        {
+            return new MessageInfoViewModel
             {
                 MessageId = model.MessageId,
-                ClientId = model.ClientId,
-                SenderName = model.FromMailAddress,
+                SenderName = model.SenderName,
                 DateDelivery = model.DateDelivery,
                 Subject = model.Subject,
-                Body = model.Body
-            });
-            context.SaveChanges();
+                Body = model.Body,
+                IsRead = model.IsRead,
+                Reply = model.Reply
+            };
+        }
+        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo message)
+        {
+            message.MessageId = model.MessageId;
+            message.ClientId = model.ClientId;
+            message.SenderName = model.FromMailAddress;
+            message.DateDelivery = model.DateDelivery;
+            message.Subject = model.Subject;
+            message.Body = model.Body;
+            message.IsRead = model.IsRead;
+            message.Reply = model.Reply;
+            return message;
         }
     }
 }

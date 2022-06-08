@@ -27,10 +27,23 @@ namespace FurnitureAssemblyFileImplement.Implements
             {
                 return null;
             }
+            if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+            {
+                return source.MessagesInfo.Skip((int)model.ToSkip).Take((int)model.ToTake)
+                    .Select(CreateModel).ToList();
+            }
             return source.MessagesInfo.Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
-            (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
-                .Select(CreateModel)
-                .ToList();
+                (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
+                .Select(CreateModel).ToList();
+        }
+        public MessageInfoViewModel GetElement(MessageInfoBindingModel model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+            var message = source.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+            return message != null ? CreateModel(message) : null;
         }
         public void Insert(MessageInfoBindingModel model)
         {
@@ -39,28 +52,40 @@ namespace FurnitureAssemblyFileImplement.Implements
             {
                 throw new Exception("Уже есть письмо с таким идентификатором");
             }
-            source.MessagesInfo.Add(CreateModel(model, element));
+            source.MessagesInfo.Add(CreateModel(model, new MessageInfo()));
         }
-        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo messageInfo)
+        public void Update(MessageInfoBindingModel model)
         {
-            messageInfo.MessageId = model.MessageId;
-            messageInfo.ClientId = model.ClientId;
-            messageInfo.SenderName = model.FromMailAddress;
-            messageInfo.DateDelivery = model.DateDelivery;
-            messageInfo.Subject = model.Subject;
-            messageInfo.Body = model.Body;
-            return messageInfo;
+            var element = source.MessagesInfo.FirstOrDefault(rec => rec.MessageId == model.MessageId);
+            if (element == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            CreateModel(model, element);
         }
-        private MessageInfoViewModel CreateModel(MessageInfo messageInfo)
+        private MessageInfoViewModel CreateModel(MessageInfo model)
         {
             return new MessageInfoViewModel
             {
-                MessageId = messageInfo.MessageId,
-                SenderName = messageInfo.SenderName,
-                DateDelivery = messageInfo.DateDelivery,
-                Subject = messageInfo.Subject,
-                Body = messageInfo.Body
+                MessageId = model.MessageId,
+                SenderName = model.SenderName,
+                DateDelivery = model.DateDelivery,
+                Subject = model.Subject,
+                Body = model.Body,
+                Reply = model.Reply,
+                IsRead = model.IsRead
             };
+        }
+        private static MessageInfo CreateModel(MessageInfoBindingModel model, MessageInfo message)
+        {
+            message.MessageId = model.MessageId;
+            message.Body = model.Body;
+            message.ClientId = model.ClientId;
+            message.DateDelivery = model.DateDelivery;
+            message.Subject = model.Subject;
+            message.IsRead = model.IsRead;
+            message.Reply = model.Reply;
+            return message;
         }
     }
 }

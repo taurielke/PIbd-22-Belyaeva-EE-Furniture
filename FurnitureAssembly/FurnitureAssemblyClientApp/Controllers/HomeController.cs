@@ -141,10 +141,15 @@ namespace FurnitureAssemblyClientApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult MessageInfo()
+        public IActionResult MessageInfo(int page = 1)
         {
-            ViewBag.MessagesInfo = APIClient.GetRequest<List<MessageInfoViewModel>>($"api/client/GetClientsMessagesInfo?clientId={Program.Client.Id}");
-            return View();
+            if (Program.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            var elem = APIClient.GetRequest<(List<MessageInfoViewModel> list, bool isNext)>($"api/client/GetClientsMessageInfo?clientId={Program.Client.Id}&page={page}");
+            (List<MessageInfoViewModel>, bool, int) model = (elem.list, elem.isNext, page);
+            return View(model);
         }
     }
 }

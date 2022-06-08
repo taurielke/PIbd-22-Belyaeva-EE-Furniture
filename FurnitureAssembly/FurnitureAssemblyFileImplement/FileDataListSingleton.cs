@@ -18,8 +18,6 @@ namespace FurnitureAssemblyFileImplement
         private readonly string FurnitureFileName = "Furniture.xml";
         private readonly string WarehouseFileName = "Warehouse.xml";
         private readonly string ClientFileName = "Client.xml";
-
-        private readonly string ImplementerFileName = "Implementer.xml";
         private readonly string MessageInfoFileName = "MessageInfo.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
