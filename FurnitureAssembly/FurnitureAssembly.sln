@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureAssemblyFileImplem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureAssemblyDatabaseImplement", "FurnitureAssemblyDatabaseImplement\FurnitureAssemblyDatabaseImplement.csproj", "{602AB309-1FDA-4D5D-ABF3-96B569839428}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureAssemblyRestApi", "FurnitureAssemblyRestApi\FurnitureAssemblyRestApi.csproj", "{7973AC8F-38EA-4171-BA70-5AF2A292E7F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureAssemblyRestApi", "FurnitureAssemblyRestApi\FurnitureAssemblyRestApi.csproj", "{7973AC8F-38EA-4171-BA70-5AF2A292E7F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureAssemblyClientApp", "FurnitureAssemblyClientApp\FurnitureAssemblyClientApp.csproj", "{F16E3073-DC0D-4875-A351-8B86101DA32F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureAssemblyClientApp", "FurnitureAssemblyClientApp\FurnitureAssemblyClientApp.csproj", "{F16E3073-DC0D-4875-A351-8B86101DA32F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureAssemblyWarehouseApp", "FurnitureAssemblyWarehouseApp\FurnitureAssemblyWarehouseApp.csproj", "{E90E93DB-2D23-4F4A-846C-F0BD4073B42C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{F16E3073-DC0D-4875-A351-8B86101DA32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F16E3073-DC0D-4875-A351-8B86101DA32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F16E3073-DC0D-4875-A351-8B86101DA32F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E90E93DB-2D23-4F4A-846C-F0BD4073B42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E90E93DB-2D23-4F4A-846C-F0BD4073B42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E90E93DB-2D23-4F4A-846C-F0BD4073B42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E90E93DB-2D23-4F4A-846C-F0BD4073B42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

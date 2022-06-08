@@ -194,6 +194,54 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponsiblePerson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("WarehouseComponents");
+                });
+
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.FurnitureComponent", b =>
                 {
                     b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Component", "Component")
@@ -247,6 +295,25 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Navigation("Implementer");
                 });
 
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.WarehouseComponent", b =>
+                {
+                    b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Component", "Component")
+                        .WithMany()
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Warehouse", "Warehouse")
+                        .WithMany("WarehouseComponents")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Component");
+
+                    b.Navigation("Warehouse");
+                });
+
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Client", b =>
                 {
                     b.Navigation("Orders");
@@ -267,6 +334,11 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Implementer", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Warehouse", b =>
+                {
+                    b.Navigation("WarehouseComponents");
                 });
 #pragma warning restore 612, 618
         }
