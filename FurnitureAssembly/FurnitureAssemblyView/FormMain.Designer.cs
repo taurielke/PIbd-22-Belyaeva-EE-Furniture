@@ -122,8 +122,7 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemFurniture,
             this.ToolStripMenuItemClients,
             this.ToolStripMenuItemImplementers,
-            this.toolStripMenuItemWarehouses});
-            this.ToolStripMenuItemImplementers,
+            this.toolStripMenuItemWarehouses,
             this.электронныеПисьмаToolStripMenuItem});
             this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
             this.toolStripMenuItemHelp.Size = new System.Drawing.Size(139, 29);

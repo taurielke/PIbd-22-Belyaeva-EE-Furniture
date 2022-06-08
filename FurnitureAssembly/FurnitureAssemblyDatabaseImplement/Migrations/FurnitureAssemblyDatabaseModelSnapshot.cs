@@ -139,6 +139,12 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
                     b.Property<DateTime>("DateDelivery")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reply")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SenderName")
                         .HasColumnType("nvarchar(max)");
 
@@ -149,7 +155,7 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("MessagesInfo");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Order", b =>
@@ -264,7 +270,7 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("FurnitureAssemblyDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
@@ -316,6 +322,8 @@ namespace FurnitureAssemblyDatabaseImplement.Migrations
 
             modelBuilder.Entity("FurnitureAssemblyDatabaseImplement.Models.Client", b =>
                 {
+                    b.Navigation("Messages");
+
                     b.Navigation("Orders");
                 });
 
