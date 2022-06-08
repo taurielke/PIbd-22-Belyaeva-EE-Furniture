@@ -4,6 +4,7 @@ using Microsoft.Reporting.WinForms;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace FurnitureAssemblyView
 {
@@ -29,7 +30,8 @@ namespace FurnitureAssemblyView
         {
             try
             {
-                var dataSource = _logic.GetOrdersGroupedByDate();
+                MethodInfo method = _logic.GetType().GetMethod("GetOrdersGroupedByDate");
+                var dataSource = method.Invoke(_logic, Array.Empty<object>());
                 var source = new ReportDataSource("DataSetOrdersGroupedByDate", dataSource);
                 reportViewer.LocalReport.DataSources.Clear();
                 reportViewer.LocalReport.DataSources.Add(source);
@@ -48,10 +50,11 @@ namespace FurnitureAssemblyView
             {
                 try
                 {
-                    _logic.SaveOrdersGroupedByDateToPdfFile(new ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveOrdersGroupedByDateToPdfFile");
+                    method.Invoke(_logic, new object[] {new ReportBindingModel
                     {
                         FileName = dialog.FileName
-                    });
+                    }});
                     MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)

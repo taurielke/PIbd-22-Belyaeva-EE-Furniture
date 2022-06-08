@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using FurnitureAssemblyContracts.BindingModels;
 using FurnitureAssemblyContracts.BusinessLogicsContracts;
 using Unity;
+using System.Reflection;
 
 namespace FurnitureAssemblyView
 {
@@ -15,19 +16,17 @@ namespace FurnitureAssemblyView
     {
         private readonly IOrderLogic _orderLogic;
         private readonly IReportLogic _reportLogic;
-        private readonly IClientLogic _clientLogic;
         private readonly IWorkProcess _workProcess;
         private readonly IImplementerLogic _implementerLogic;
         private readonly IBackUpLogic _backUpLogic;
 
-        public FormMain(IOrderLogic orderLogic, IReportLogic reportLogic, IWorkProcess workProcess, IImplementerLogic implementerLogic, IClientLogic clientLogic, IBackUpLogic backUpLogic)
+        public FormMain(IOrderLogic orderLogic, IReportLogic reportLogic, IWorkProcess workProcess, IImplementerLogic implementerLogic, IBackUpLogic backUpLogic)
         {
             InitializeComponent();
             _orderLogic = orderLogic;
             _reportLogic = reportLogic;
             _workProcess = workProcess;
             _implementerLogic = implementerLogic;
-            _clientLogic = clientLogic; 
             _backUpLogic = backUpLogic;
         }
 
@@ -66,15 +65,18 @@ namespace FurnitureAssemblyView
             form.ShowDialog();
         }
 
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         private void toolStripMenuItemFurnitureList_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog { Filter = "docx|*.docx" };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _reportLogic.SaveFurnituresToWordFile(new ReportBindingModel
+                MethodInfo method = _reportLogic.GetType().GetMethod("SaveFurnituresToWordFile");
+                method.Invoke(_reportLogic, new object[] {new ReportBindingModel
                 {
                     FileName = dialog.FileName
-                });
+                }});
                 MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

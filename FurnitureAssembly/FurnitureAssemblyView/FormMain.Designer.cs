@@ -106,7 +106,6 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemFillWarehouses,
             this.toolStripMenuItemReports,
             this.toolStripMenuItemWarehouseReports,
-            this.ToolStripMenuItemLaunchWork});
             this.ToolStripMenuItemLaunchWork,
             this.ToolStripMenuItemCreateBackup});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);

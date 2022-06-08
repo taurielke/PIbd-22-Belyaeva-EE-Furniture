@@ -71,9 +71,7 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
         {
             var records = _backUpInfo.GetList<T>();
             var obj = new T();
-
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-
             using var fs = new FileStream(string.Format("{0}/{1}.xml", folderName, obj.GetType().Name), FileMode.OpenOrCreate);
             serializer.Serialize(fs, records);
         }

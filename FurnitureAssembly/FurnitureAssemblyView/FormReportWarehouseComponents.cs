@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using FurnitureAssemblyContracts.BindingModels;
 using FurnitureAssemblyContracts.BusinessLogicsContracts;
+using FurnitureAssemblyContracts.ViewModels;
+using System.Reflection;
 
 namespace FurnitureAssemblyView
 {
@@ -23,7 +25,8 @@ namespace FurnitureAssemblyView
         {
             try
             {
-                var dict = _logic.GetWarehouseComponent();
+                MethodInfo method = _logic.GetType().GetMethod("GetWarehouseComponent");
+                List <ReportWarehouseComponentViewModel> dict = (List <ReportWarehouseComponentViewModel>)method.Invoke(_logic, Array.Empty<object>());
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -53,10 +56,11 @@ namespace FurnitureAssemblyView
             {
                 try
                 {
-                    _logic.SaveWarehouseComponentToExcelFile(new ReportBindingModel
+                    MethodInfo method = _logic.GetType().GetMethod("SaveWarehouseComponentToExcelFile");
+                    method.Invoke(_logic, new object[] {new ReportBindingModel
                     {
                         FileName = dialog.FileName
-                    });
+                    }});
                     MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)

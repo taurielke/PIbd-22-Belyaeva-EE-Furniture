@@ -86,11 +86,6 @@ namespace FurnitureAssemblyView
                 labelCurrentPage.Text = "Страница | " + (currentPage + 1).ToString() + " |";
                 buttonBack.Enabled = true;
                 LoadData();
-                Program.ConfigGrid(_messageInfoLogic.Read(null), dataGridView);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
