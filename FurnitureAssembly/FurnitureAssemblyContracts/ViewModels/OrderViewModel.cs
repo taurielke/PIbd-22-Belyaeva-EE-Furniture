@@ -26,9 +26,9 @@ namespace FurnitureAssemblyContracts.ViewModels
         public decimal Sum { get; set; }
         [Column(title: "Статус", width: 100)]
         public string Status { get; set; }
-        [Column(title: "Дата создания", width: 100)]
+        [Column(title: "Дата создания", width: 100, dateFormat: "dddd, dd MMMM yyyy HH: mm:ss")]
         public DateTime DateCreate { get; set; }
-        [Column(title: "Дата выполнения", width: 100)]
+        [Column(title: "Дата выполнения", width: 100, dateFormat: "dddd, dd MMMM yyyy HH: mm:ss")]
         public DateTime? DateImplement { get; set; }
 
     }

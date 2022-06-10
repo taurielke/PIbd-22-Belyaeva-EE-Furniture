@@ -39,19 +39,18 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemFurniture = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemClients = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemImplementers = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemWarehouses = new System.Windows.Forms.ToolStripMenuItem();
             this.электронныеПисьмаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFillWarehouses = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemReports = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnitureList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFurnituresComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOrderList = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemLaunchWork = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemWarehouseReports = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemWarehouseList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemWarehouseComponents = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOrdersGroupedByDate = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemFillWarehouses = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemWarehouses = new System.Windows.Forms.ToolStripMenuItem();
-            this.электронныеПисьмаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemLaunchWork = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCreateBackup = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -65,12 +64,12 @@ namespace FurnitureAssemblyView
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 62;
             this.dataGridView.RowTemplate.Height = 33;
-            this.dataGridView.Size = new System.Drawing.Size(960, 507);
+            this.dataGridView.Size = new System.Drawing.Size(1247, 507);
             this.dataGridView.TabIndex = 1;
             // 
             // buttonCreateOrder
             // 
-            this.buttonCreateOrder.Location = new System.Drawing.Point(985, 141);
+            this.buttonCreateOrder.Location = new System.Drawing.Point(1253, 152);
             this.buttonCreateOrder.Name = "buttonCreateOrder";
             this.buttonCreateOrder.Size = new System.Drawing.Size(327, 62);
             this.buttonCreateOrder.TabIndex = 2;
@@ -80,7 +79,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonIssuedOrder
             // 
-            this.buttonIssuedOrder.Location = new System.Drawing.Point(985, 259);
+            this.buttonIssuedOrder.Location = new System.Drawing.Point(1253, 270);
             this.buttonIssuedOrder.Name = "buttonIssuedOrder";
             this.buttonIssuedOrder.Size = new System.Drawing.Size(327, 62);
             this.buttonIssuedOrder.TabIndex = 5;
@@ -90,7 +89,7 @@ namespace FurnitureAssemblyView
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(985, 379);
+            this.buttonRefresh.Location = new System.Drawing.Point(1253, 390);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(327, 62);
             this.buttonRefresh.TabIndex = 6;
@@ -110,7 +109,7 @@ namespace FurnitureAssemblyView
             this.ToolStripMenuItemCreateBackup});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1324, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1609, 33);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -151,16 +150,16 @@ namespace FurnitureAssemblyView
             // ToolStripMenuItemImplementers
             // 
             this.ToolStripMenuItemImplementers.Name = "ToolStripMenuItemImplementers";
-            this.ToolStripMenuItemImplementers.Size = new System.Drawing.Size(270, 34);
-            this.ToolStripMenuItemImplementers.Text = "Исполнители";
-            this.ToolStripMenuItemImplementers.Click += new System.EventHandler(this.ToolStripMenuItemImplementers_Click);
-            // 
-            // ToolStripMenuItemImplementers
-            // 
-            this.ToolStripMenuItemImplementers.Name = "ToolStripMenuItemImplementers";
             this.ToolStripMenuItemImplementers.Size = new System.Drawing.Size(287, 34);
             this.ToolStripMenuItemImplementers.Text = "Исполнители";
             this.ToolStripMenuItemImplementers.Click += new System.EventHandler(this.ToolStripMenuItemImplementers_Click);
+            // 
+            // toolStripMenuItemWarehouses
+            // 
+            this.toolStripMenuItemWarehouses.Name = "toolStripMenuItemWarehouses";
+            this.toolStripMenuItemWarehouses.Size = new System.Drawing.Size(287, 34);
+            this.toolStripMenuItemWarehouses.Text = "Склады";
+            this.toolStripMenuItemWarehouses.Click += new System.EventHandler(this.toolStripMenuItemWarehouses_Click);
             // 
             // электронныеПисьмаToolStripMenuItem
             // 
@@ -168,6 +167,13 @@ namespace FurnitureAssemblyView
             this.электронныеПисьмаToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
             this.электронныеПисьмаToolStripMenuItem.Text = "Электронные письма";
             this.электронныеПисьмаToolStripMenuItem.Click += new System.EventHandler(this.электронныеПисьмаToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItemFillWarehouses
+            // 
+            this.toolStripMenuItemFillWarehouses.Name = "toolStripMenuItemFillWarehouses";
+            this.toolStripMenuItemFillWarehouses.Size = new System.Drawing.Size(181, 29);
+            this.toolStripMenuItemFillWarehouses.Text = "Пополнить склады";
+            this.toolStripMenuItemFillWarehouses.Click += new System.EventHandler(this.toolStripMenuItemFillWarehouses_Click);
             // 
             // toolStripMenuItemReports
             // 
@@ -200,13 +206,6 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemOrderList.Text = "Список заказов";
             this.toolStripMenuItemOrderList.Click += new System.EventHandler(this.toolStripMenuItemOrderList_Click);
             // 
-            // ToolStripMenuItemLaunchWork
-            // 
-            this.ToolStripMenuItemLaunchWork.Name = "ToolStripMenuItemLaunchWork";
-            this.ToolStripMenuItemLaunchWork.Size = new System.Drawing.Size(136, 29);
-            this.ToolStripMenuItemLaunchWork.Text = "Запуск работ";
-            this.ToolStripMenuItemLaunchWork.Click += new System.EventHandler(this.ToolStripMenuItemLaunchWork_Click);
-            // 
             // toolStripMenuItemWarehouseReports
             // 
             this.toolStripMenuItemWarehouseReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -238,25 +237,15 @@ namespace FurnitureAssemblyView
             this.toolStripMenuItemOrdersGroupedByDate.Text = "Общий отчет по всем заказам";
             this.toolStripMenuItemOrdersGroupedByDate.Click += new System.EventHandler(this.toolStripMenuItemOrdersGroupedByDate_Click);
             // 
-            // toolStripMenuItemFillWarehouses
+            // ToolStripMenuItemLaunchWork
             // 
-            this.toolStripMenuItemFillWarehouses.Name = "toolStripMenuItemFillWarehouses";
-            this.toolStripMenuItemFillWarehouses.Size = new System.Drawing.Size(181, 29);
-            this.toolStripMenuItemFillWarehouses.Text = "Пополнить склады";
-            this.toolStripMenuItemFillWarehouses.Click += new System.EventHandler(this.toolStripMenuItemFillWarehouses_Click);
+            this.ToolStripMenuItemLaunchWork.Name = "ToolStripMenuItemLaunchWork";
+            this.ToolStripMenuItemLaunchWork.Size = new System.Drawing.Size(136, 29);
+            this.ToolStripMenuItemLaunchWork.Text = "Запуск работ";
+            this.ToolStripMenuItemLaunchWork.Click += new System.EventHandler(this.ToolStripMenuItemLaunchWork_Click);
             // 
-            // toolStripMenuItemWarehouses
-            // электронныеПисьмаToolStripMenuItem
             // ToolStripMenuItemCreateBackup
             // 
-            this.toolStripMenuItemWarehouses.Name = "toolStripMenuItemWarehouses";
-            this.toolStripMenuItemWarehouses.Size = new System.Drawing.Size(270, 34);
-            this.toolStripMenuItemWarehouses.Text = "Склады";
-            this.toolStripMenuItemWarehouses.Click += new System.EventHandler(this.toolStripMenuItemWarehouses_Click);
-            this.электронныеПисьмаToolStripMenuItem.Name = "электронныеПисьмаToolStripMenuItem";
-            this.электронныеПисьмаToolStripMenuItem.Size = new System.Drawing.Size(287, 34);
-            this.электронныеПисьмаToolStripMenuItem.Text = "Электронные письма";
-            this.электронныеПисьмаToolStripMenuItem.Click += new System.EventHandler(this.электронныеПисьмаToolStripMenuItem_Click);
             this.ToolStripMenuItemCreateBackup.Name = "ToolStripMenuItemCreateBackup";
             this.ToolStripMenuItemCreateBackup.Size = new System.Drawing.Size(145, 29);
             this.ToolStripMenuItemCreateBackup.Text = "Создать бекап";
@@ -266,7 +255,7 @@ namespace FurnitureAssemblyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1324, 542);
+            this.ClientSize = new System.Drawing.Size(1609, 683);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonIssuedOrder);
             this.Controls.Add(this.buttonCreateOrder);
