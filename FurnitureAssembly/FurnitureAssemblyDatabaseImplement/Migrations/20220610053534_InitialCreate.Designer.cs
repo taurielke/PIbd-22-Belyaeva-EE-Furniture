@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FurnitureAssemblyDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureAssemblyDatabase))]
-    [Migration("20220521114309_lab7hard")]
-    partial class lab7hard
+    [Migration("20220610053534_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
