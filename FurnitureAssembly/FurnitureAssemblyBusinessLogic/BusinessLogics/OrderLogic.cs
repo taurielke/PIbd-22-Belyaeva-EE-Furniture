@@ -6,6 +6,7 @@ using FurnitureAssemblyContracts.BusinessLogicsContracts;
 using FurnitureAssemblyContracts.StoragesContracts;
 using FurnitureAssemblyContracts.ViewModels;
 using FurnitureAssemblyContracts.Enums;
+using FurnitureAssemblyBusinessLogic.MailWorker;
 
 namespace FurnitureAssemblyBusinessLogic.BusinessLogics
 {
@@ -14,12 +15,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IWarehouseStorage _warehouseStorage;
         private readonly IFurnitureStorage _furnitureStorage;
-
-        public OrderLogic(IOrderStorage orderStorage, IWarehouseStorage warehouseStorage, IFurnitureStorage furnitureStorage)
+        private readonly IClientStorage _clientStorage;
+        private readonly AbstractMailWorker _abstractMailWorker;
+        public OrderLogic(IOrderStorage orderStorage, IClientStorage clientStorage, AbstractMailWorker abstractMailWorker, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
             _warehouseStorage = warehouseStorage;
             _furnitureStorage = furnitureStorage;
+            _clientStorage = clientStorage;
+            _abstractMailWorker = abstractMailWorker;
         }
 
         public List<OrderViewModel> Read(OrderBindingModel model)
@@ -46,6 +50,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят
             });
+            _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = model.ClientId
+                })?.Email,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
+            });
         }
 
         public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -63,7 +76,7 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 throw new Exception("Заказ не в статусе \"Принят\" и не в \"Требуются материалы\"");
             }
             var furniture = _furnitureStorage.GetElement(new FurnitureBindingModel { Id = order.FurnitureId });
-            
+
             var orderCheck = new OrderBindingModel
             {
                 Id = order.Id,
@@ -73,8 +86,8 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
-            }; 
-            
+            };
+
             try
             {
                 if (_warehouseStorage.CheckComponentsAmount(orderCheck.Count, furniture.FurnitureComponents))
@@ -82,6 +95,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                     orderCheck.Status = OrderStatus.Выполняется;
                     orderCheck.DateImplement = DateTime.Now;
                     _orderStorage.Update(orderCheck);
+                    _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+                    {
+                        MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                        {
+                            Id = order.ClientId
+                        })?.Email,
+                        Subject = $"Смена статуса заказа№ {order.Id}",
+                        Text = $"Статус изменен на: {OrderStatus.Выполняется}"
+                    });
                 }
             }
             catch
@@ -89,6 +111,7 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 orderCheck.Status = OrderStatus.ТребуютсяМатериалы;
                 _orderStorage.Update(orderCheck);
             }
+
         }
 
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -117,6 +140,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Готов
             });
+            _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} готов."
+            });
         }
 
         public void DeliveryOrder(ChangeStatusBindingModel model)
@@ -144,6 +176,15 @@ namespace FurnitureAssemblyBusinessLogic.BusinessLogics
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Выдан
+            });
+            _abstractMailWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                {
+                    Id = order.ClientId
+                })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} выдан."
             });
         }
     }
